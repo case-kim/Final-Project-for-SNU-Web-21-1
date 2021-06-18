@@ -13,6 +13,7 @@ import EmptyState from "../EmptyState";
 
 import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
 import { ReactComponent as InsertBlockIllustration } from "../../illustrations/insert-block.svg";
+import { ReactComponent as MBTI } from "../../illustrations/mbti.png";
 
 class HomePage extends Component {
   signInWithEmailLink = () => {
@@ -76,9 +77,11 @@ class HomePage extends Component {
     if (user) {
       return (
           <EmptyState
-              image={<CabinIllustration/>}
-            title="Home"
-            description="This is the home page. You can edit it from HomePage.js."
+            id = 'Test Start'
+            image={<CabinIllustration/>}
+            variant='contained'
+            button = "Test Start"
+            description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
           />
 
       );
@@ -87,7 +90,7 @@ class HomePage extends Component {
     return (
       <EmptyState
         image={<InsertBlockIllustration />}
-        title="RMUIF"
+        button  ="RMUIF"
         description="Supercharged version of Create React App with all the bells and whistles."
       />
     );
