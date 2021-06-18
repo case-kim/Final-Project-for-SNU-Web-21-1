@@ -8,6 +8,8 @@ import HomePage from "../HomePage";
 import AdminPage from "../AdminPage";
 import UserPage from "../UserPage";
 import NotFoundPage from "../NotFoundPage";
+import Questions from "../Test/Questions";
+import Result from "../Test/Result";
 
 class Router extends Component {
   render() {
@@ -32,6 +34,14 @@ class Router extends Component {
             ) : (
               <Redirect to="/" />
             )}
+          </Route>
+
+          <Route path="/test">
+            <Questions />
+          </Route>
+
+          <Route path="result">
+            <Result />
           </Route>
 
           <Route path="/user/:userId">
