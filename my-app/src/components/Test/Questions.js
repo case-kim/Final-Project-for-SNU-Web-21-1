@@ -160,7 +160,7 @@ class Questions extends Component {
                                 onClick={this.toggleClass.bind(this, index)}
                                 question-type={question.question_type}>{question.answer_1}</Button>
                         <Button variant="contained"
-                                className={this.state.active[index + 12] ? 'onClick down' : 'unClick down'}
+                                className={this.state.a ctive[index + 12] ? 'onClick down' : 'unClick down'}
                                 color={this.state.active[index + 12] ? 'primary' : 'default'}
                                 onClick={this.toggleClass_1.bind(this, index + 12)}
                                 question-type={question.question_type}>{question.answer_2}</Button>
@@ -168,7 +168,7 @@ class Questions extends Component {
                 </div>)
             }
             <Button component={Link} to="/result" variant="contained" color="primary" onClick={submit}>
-                Submit
+                제출하기
             </Button>
         </div>
     }
