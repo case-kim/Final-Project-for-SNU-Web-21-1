@@ -1,11 +1,17 @@
+import { Modal } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { useState } from 'react';
+import DetailModal from './DetailModal';
 import './style.css';
 
 const PartnerCard = ({username, type}) => {
+
+    const [modalOpen, setModalOpen] = useState(false);
+
     return <div className="card-container">
-        <Card className="card" variant="outlined">
+        <Card className="card" variant="outlined" onClick={() => setModalOpen(true)}>
             <CardContent>
                 <Grid container className="card-body" spacing={3}>
                     <Grid item xs={12} className="card-header">
@@ -27,6 +33,10 @@ const PartnerCard = ({username, type}) => {
                 </Grid>
             </CardContent>
         </Card>
+
+        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+            <DetailModal open={modalOpen} />
+        </Modal>
     </div>
 }
 
