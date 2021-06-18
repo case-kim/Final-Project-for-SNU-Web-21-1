@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Try to Edit the Homepage">
-      <change afterPath="$PROJECT_DIR$/my-app/src/illustrations/mbti.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-app/src/components/Test/Questions.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/Test/Questions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,11 +22,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SNU MBTI Matching V3/SNU-MBTI-V3" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="" />
@@ -44,6 +52,7 @@
       <workItem from="1623944489695" duration="723000" />
       <workItem from="1623952052783" duration="5490000" />
       <workItem from="1623992662715" duration="9326000" />
+      <workItem from="1624025391261" duration="13328000" />
     </task>
     <task id="LOCAL-00001" summary="Update Firebase ID in .env">
       <created>1623864913912</created>
@@ -70,7 +79,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -88,5 +97,11 @@
     <MESSAGE value="Update Firebase ID in .env" />
     <MESSAGE value="Try to Edit the Homepage" />
     <option name="LAST_COMMIT_MESSAGE" value="Try to Edit the Homepage" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1229" y="320" key="SettingsEditor" timestamp="1624028000245">
+      <screen x="0" y="25" width="3440" height="1318" />
+    </state>
+    <state x="1229" y="320" key="SettingsEditor/0.25.3440.1318/3440.25.1680.1025@0.25.3440.1318" timestamp="1624028000245" />
   </component>
 </project>
