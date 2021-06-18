@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Loader from '../Loader';
+import PartnerCard from './PartnerCard';
 import './style.css';
 
 const Matching = ({type}) => {
@@ -8,7 +9,7 @@ const Matching = ({type}) => {
     const [partners, setPartners] = useState([]);
 
     useEffect(() => {
-        // 타입 맞는 상대 불러오기: API
+        // 타입 맞는 상대 불러오기: API. type 프로퍼티 활용
         const res = [
             {'username': '상대1', 'type': 'A'},
             {'username': '상대2', 'type': 'B'},
@@ -29,7 +30,7 @@ const Matching = ({type}) => {
     } 
 
     return <div id="matching">
-        <h1>매치 상대들을 보여줍니다.</h1>
+        {partners.map(partner => <PartnerCard {...partner} />)}
     </div>
 }
 
