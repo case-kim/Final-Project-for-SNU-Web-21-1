@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Loader from '../Loader';
 import PartnerCard from './PartnerCard';
 import './style.css';
+import { Grid } from '@material-ui/core';
 
 const Matching = ({type}) => {
 
@@ -29,9 +30,9 @@ const Matching = ({type}) => {
         return <h1>맞는 상대가 없습니다.</h1>
     } 
 
-    return <div id="matching">
+    return <Grid container direction="column" justify="center" alignItems="center" id="matching">
         {partners.map(partner => <PartnerCard {...partner} />)}
-    </div>
+    </Grid>
 }
 
 export default Matching;
