@@ -14,11 +14,12 @@ const useStyles = makeStyles({
   },
 });
 
-function Loader() {
+function Loader({message}) {
   const classes = useStyles();
 
   return (
     <div className={classes.center}>
+      <h1>{message}</h1>
       <CircularProgress />
     </div>
   );
