@@ -40,7 +40,7 @@ class Router extends Component {
             <Questions />
           </Route>
 
-          <Route path="result">
+          <Route path="/result">
             <Result />
           </Route>
 
