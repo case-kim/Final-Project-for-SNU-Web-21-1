@@ -1,4 +1,4 @@
-import { Modal } from '@material-ui/core';
+import { Dialog, Modal } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -34,9 +34,9 @@ const PartnerCard = ({username, type}) => {
             </CardContent>
         </Card>
 
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
             <DetailModal open={modalOpen} />
-        </Modal>
+        </Dialog>
     </div>
 }
 
