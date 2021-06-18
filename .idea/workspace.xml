@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Update Firebase ID in .env">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SNU MBTI Matching V3/SNU-MBTI-V3" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -34,11 +36,40 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623863474684</updated>
-      <workItem from="1623863482218" duration="1326000" />
+      <workItem from="1623863482218" duration="9324000" />
+      <workItem from="1623881385276" duration="1271000" />
+      <workItem from="1623909728007" duration="904000" />
+      <workItem from="1623915790887" duration="648000" />
+      <workItem from="1623944489695" duration="723000" />
+      <workItem from="1623952052783" duration="5490000" />
     </task>
+    <task id="LOCAL-00001" summary="Update Firebase ID in .env">
+      <created>1623864913912</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1623864913912</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update Firebase ID in .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Firebase ID in .env" />
   </component>
 </project>
