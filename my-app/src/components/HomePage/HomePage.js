@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Button} from '@material-ui/core'
 
 import PropTypes from "prop-types";
 
@@ -74,11 +75,12 @@ class HomePage extends Component {
 
     if (user) {
       return (
-        <EmptyState
-          image={<CabinIllustration />}
-          title="Home"
-          description="This is the home page. You can edit it from HomePage.js."
-        />
+          <EmptyState
+              image={<CabinIllustration/>}
+            title="Home"
+            description="This is the home page. You can edit it from HomePage.js."
+          />
+
       );
     }
 
