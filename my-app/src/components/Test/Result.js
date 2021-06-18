@@ -1,7 +1,16 @@
-const Result = () => {
-    return <div id="test-result">
-        <h1>테스트 결과 컴포넌트</h1>
-    </div>
+import React, {Component} from "react";
+import {Link} from 'react-router-dom';
+import {Button} from '@material-ui/core';
+
+
+class Result extends Component {
+
+    render() {
+        console.log(this.props.location)
+        return <div className="test-result">
+            <h2>심리테스트 결과</h2>
+        </div>
+    }
 }
 
 export default Result;

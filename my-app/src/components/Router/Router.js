@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import PropTypes from "prop-types";
 
-import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+import {BrowserRouter, Switch, Redirect, Route} from "react-router-dom";
 
 import HomePage from "../HomePage";
 import AdminPage from "../AdminPage";
@@ -12,59 +12,60 @@ import Questions from "../Test/Questions";
 import Result from "../Test/Result";
 
 class Router extends Component {
-  render() {
-    // Properties
-    const { user, roles, bar } = this.props;
 
-    // Functions
-    const { openSnackbar } = this.props;
+    render() {
+        // Properties
+        const {user, roles, bar} = this.props;
 
-    return (
-      <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
-        {bar}
+        // Functions
+        const {openSnackbar} = this.props;
 
-        <Switch>
-          <Route path="/" exact>
-            <HomePage user={user} openSnackbar={openSnackbar} />
-          </Route>
+        return (
+            <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
+                {bar}
 
-          <Route path="/admin">
-            {user && roles.includes("admin") ? (
-              <AdminPage />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
+                <Switch>
+                    <Route path="/" exact>
+                        <HomePage user={user} openSnackbar={openSnackbar}/>
+                    </Route>
 
-          <Route path="/test">
-            <Questions />
-          </Route>
+                    <Route path="/admin">
+                        {user && roles.includes("admin") ? (
+                            <AdminPage/>
+                        ) : (
+                            <Redirect to="/"/>
+                        )}
+                    </Route>
 
-          <Route path="/result">
-            <Result />
-          </Route>
+                    <Route path="/test">
+                        <Questions/>
+                    </Route>
 
-          <Route path="/user/:userId">
-            {user ? <UserPage /> : <Redirect to="/" />}
-          </Route>
+                    <Route path="/result">
+                        <Result/>
+                    </Route>
 
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
+                    <Route path="/user/:userId">
+                        {user ? <UserPage/> : <Redirect to="/"/>}
+                    </Route>
+
+                    <Route>
+                        <NotFoundPage/>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        );
+    }
 }
 
 Router.propTypes = {
-  // Properties
-  user: PropTypes.object,
-  roles: PropTypes.array.isRequired,
-  bar: PropTypes.element,
+    // Properties
+    user: PropTypes.object,
+    roles: PropTypes.array.isRequired,
+    bar: PropTypes.element,
 
-  // Functions
-  openSnackbar: PropTypes.func.isRequired,
+    // Functions
+    openSnackbar: PropTypes.func.isRequired,
 };
 
 export default Router;
