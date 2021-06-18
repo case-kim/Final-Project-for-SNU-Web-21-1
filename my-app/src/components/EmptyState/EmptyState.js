@@ -43,12 +43,13 @@ function EmptyState(props) {
         left="50%"
         textAlign="center"
       >
+
         {props.image && (
           <Box
             clone
             mb={props.title || props.description ? 2 : 0}
-            width={`${imageWidth}%`}
-            height={`${imageHeight}%`}
+            width={`100px`}
+            height={`100px`}
           >
             {props.image}
           </Box>
@@ -56,7 +57,7 @@ function EmptyState(props) {
 
         {props.title && (
           <Box mb={!props.description && props.button ? 2 : 0.5}>
-            <Typography variant={variant}>{props.title}</Typography>
+            <Button variant={variant}>{props.title}</Button>
           </Box>
         )}
 
@@ -66,7 +67,7 @@ function EmptyState(props) {
           </Box>
         )}
 
-        {props.button && props.button}
+        {props.button && <Button varaint = 'contained'>{props.button}</Button>}
       </Box>
     );
   }

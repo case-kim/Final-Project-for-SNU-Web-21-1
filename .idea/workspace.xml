@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Update Firebase ID in .env">
+    <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Try to Edit the Homepage">
+      <change afterPath="$PROJECT_DIR$/my-app/src/illustrations/mbti.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" afterDir="false" />
@@ -42,6 +43,7 @@
       <workItem from="1623915790887" duration="648000" />
       <workItem from="1623944489695" duration="723000" />
       <workItem from="1623952052783" duration="5490000" />
+      <workItem from="1623992662715" duration="9326000" />
     </task>
     <task id="LOCAL-00001" summary="Update Firebase ID in .env">
       <created>1623864913912</created>
@@ -50,7 +52,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623864913912</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Try to Edit the Homepage">
+      <created>1623992726912</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1623992726912</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Try to Edit the Homepage">
+      <created>1623992763985</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1623992763985</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -70,6 +86,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update Firebase ID in .env" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Firebase ID in .env" />
+    <MESSAGE value="Try to Edit the Homepage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Try to Edit the Homepage" />
   </component>
 </project>
