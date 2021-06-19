@@ -100,8 +100,9 @@ class HomePage extends Component {
               textAlign="center">
             <div>당신과 맞는 성향의 사람을 찾아보세요.</div>
             <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
-              <Button href={firebase.database().ref('accounts/'+uid).child('type') ?
-              './matching': './test'}> Test Start</Button>
+              {/*<Button href={firebase.database().ref('accounts/'+uid).child('type') ?*/}
+              {/*  './matching': './test'}> Test Start</Button>*/}
+              <Button href='./test'> Test Start</Button>
               <Button href='./mathcing'> Matching </Button>
               <Button> Chatting </Button>
             </ButtonGroup>

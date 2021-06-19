@@ -115,15 +115,15 @@ class Questions extends Component {
     render() {
         const user = firebase.auth().currentUser;
         var uid;
+        var myMBTI;
         if (user != null) {
             uid = user.uid
         }
         const userDb = firebase.database().ref('accounts/'+uid).set({
             userID: uid,
+            type: null,
+            mbti: null,
         })
-        const userRef = firebase.firestore().collection('accounts')
-
-        const userMBTIKey = firebase.database().ref().child('user').child(`type`).push().key;
 
         const questions = [{
             question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',
@@ -227,11 +227,13 @@ class Questions extends Component {
                 resultMBTI += 'P'
             }
             console.log(resultMBTI);
-            console.log(userRef);
             firebase.database().ref('accounts/'+uid).update({
-                type: resultMBTI,
+                mbti: resultMBTI,
             })
-            console.log(userDb);
+            firebase.database().ref('accounts/'+uid).child('mbti').on('value',function (snapshot){
+                 myMBTI = JSON.stringify(snapshot)
+            })
+            console.log(myMBTI);
             console.log(user);
             console.log(uid);
         }
