@@ -10,6 +10,7 @@ import UserPage from "../UserPage";
 import NotFoundPage from "../NotFoundPage";
 import Questions from "../Test/Questions";
 import Result from "../Test/Result";
+import Matching from "../Matching/Matching";
 
 class Router extends Component {
 
@@ -43,6 +44,10 @@ class Router extends Component {
 
                     <Route path="/result">
                         <Result/>
+                    </Route>
+
+                    <Route path="/matching">
+                      <Matching />
                     </Route>
 
                     <Route path="/user/:userId">

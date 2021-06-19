@@ -1,0 +1,20 @@
+.card-container {
+    min-width: 300px;
+    padding-top: 3em;
+}
+
+.card {
+    box-shadow: 0px 5px 5px 1px #dadada;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+}
+
+.card-body img {
+    max-height: 200px;
+    border-radius: 100px;
+    border: 5px solid orange;
+}

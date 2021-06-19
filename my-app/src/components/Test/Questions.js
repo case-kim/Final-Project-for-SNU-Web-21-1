@@ -168,7 +168,7 @@ class Questions extends Component {
                 </div>)
             }
             <Button component={Link} to="/result" variant="contained" color="primary" onClick={submit}>
-                Submit
+                제출하기
             </Button>
         </div>
     }
