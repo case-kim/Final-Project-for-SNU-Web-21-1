@@ -1,0 +1,79 @@
+Index: my-app/src/components/HomePage/HomePage.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { Component } from \"react\";\r\nimport {Button} from '@material-ui/core'\r\n\r\nimport PropTypes from \"prop-types\";\r\n\r\nimport { withRouter } from \"react-router-dom\";\r\n\r\nimport { auth } from \"../../firebase\";\r\n\r\nimport authentication from \"../../services/authentication\";\r\n\r\nimport EmptyState from \"../EmptyState\";\r\n\r\nimport { ReactComponent as CabinIllustration } from \"../../illustrations/cabin.svg\";\r\nimport { ReactComponent as InsertBlockIllustration } from \"../../illustrations/insert-block.svg\";\r\nimport { ReactComponent as MBTI } from \"../../illustrations/mbti.png\";\r\n\r\nclass HomePage extends Component {\r\n  signInWithEmailLink = () => {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return;\r\n    }\r\n\r\n    const emailLink = window.location.href;\r\n\r\n    if (!emailLink) {\r\n      return;\r\n    }\r\n\r\n    if (auth.isSignInWithEmailLink(emailLink)) {\r\n      let emailAddress = localStorage.getItem(\"emailAddress\");\r\n\r\n      if (!emailAddress) {\r\n        this.props.history.push(\"/\");\r\n\r\n        return;\r\n      }\r\n\r\n      authentication\r\n        .signInWithEmailLink(emailAddress, emailLink)\r\n        .then((value) => {\r\n          const user = value.user;\r\n          const displayName = user.displayName;\r\n          const emailAddress = user.email;\r\n\r\n          this.props.openSnackbar(\r\n            `Signed in as ${displayName || emailAddress}`\r\n          );\r\n        })\r\n        .catch((reason) => {\r\n          const code = reason.code;\r\n          const message = reason.message;\r\n\r\n          switch (code) {\r\n            case \"auth/expired-action-code\":\r\n            case \"auth/invalid-email\":\r\n            case \"auth/user-disabled\":\r\n              this.props.openSnackbar(message);\r\n              break;\r\n\r\n            default:\r\n              this.props.openSnackbar(message);\r\n              return;\r\n          }\r\n        })\r\n        .finally(() => {\r\n          this.props.history.push(\"/\");\r\n        });\r\n    }\r\n  };\r\n\r\n  render() {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return (\r\n          <EmptyState\r\n            id = 'Test Start'\r\n            image={<CabinIllustration/>}\r\n            variant='contained'\r\n            button = \"Test Start\"\r\n            description=\"당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요.\"\r\n          />\r\n\r\n      );\r\n    }\r\n\r\n    return (\r\n      <EmptyState\r\n        image={<InsertBlockIllustration />}\r\n        button  =\"RMUIF\"\r\n        description=\"Supercharged version of Create React App with all the bells and whistles.\"\r\n      />\r\n    );\r\n  }\r\n\r\n  componentDidMount() {\r\n    this.signInWithEmailLink();\r\n  }\r\n}\r\n\r\nHomePage.propTypes = {\r\n  user: PropTypes.object,\r\n};\r\n\r\nexport default withRouter(HomePage);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/HomePage/HomePage.js b/my-app/src/components/HomePage/HomePage.js
+--- a/my-app/src/components/HomePage/HomePage.js	
++++ b/my-app/src/components/HomePage/HomePage.js	
+@@ -1,5 +1,5 @@
+ import React, { Component } from "react";
+-import {Button} from '@material-ui/core'
++import {Box, Button, ButtonGroup} from '@material-ui/core'
+ 
+ import PropTypes from "prop-types";
+ 
+@@ -76,16 +76,42 @@
+ 
+     if (user) {
+       return (
+-          <EmptyState
+-            id = 'Test Start'
+-            image={<CabinIllustration/>}
+-            variant='contained'
+-            button = "Test Start"
+-            description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
+-          />
++          <Box
++              style={{ transform: "translate(-50%, -50%)" }}
++              position="absolute"
++              top="50%"
++              left="50%"
++              textAlign="center">
++            <div>당신과 맞는 성향의 사람을 찾아보세요.</div>
++            <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
++              <Button href='./test'> Test Start</Button>
++              <Button> Matching </Button>
++              <Button> Chatting </Button>
++            </ButtonGroup>
++          </Box>
++          // <EmptyState
++          //   id = 'Test Start'
++          //   image={<CabinIllustration/>}
++          //   variant='contained'
++          //   button = "Test Start"
++          //   description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++          // />
+ 
+       );
++
+     }
++    // if (user && result) {
++    //   return (
++    //       <EmptyState
++    //           id = 'meetPeople'
++    //           image={<CabinIllustration/>}
++    //           variant='contained'
++    //           button = "Meet People"
++    //           description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++    //       />
++    //
++    //   );
++    // }
+ 
+     return (
+       <EmptyState
+Index: my-app/src/components/ChatList.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/ChatList.js b/my-app/src/components/ChatList.js
+new file mode 100644
+--- /dev/null	
++++ b/my-app/src/components/ChatList.js	
+@@ -0,0 +1,2 @@
++import { BrowserRouter, Switch, Route } from 'react-router-dom'
++

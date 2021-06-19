@@ -1,9 +1,80 @@
-import React, {Component} from "react";
+import React, { useState, useEffect, Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {Button} from '@material-ui/core';
 
+import  firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/database';
+import 'firebase/functions';
+import {auth} from "../../firebase";
+import authentication from "../../services/authentication";
+
+firebase.analytics();
+// const uid = firebase.auth().currentUser.uid;
+
 class Questions extends Component {
+
+    signInWithEmailLink = () => {
+        const { user } = this.props;
+
+
+        if (user) {
+            return;
+        }
+
+        const emailLink = window.location.href;
+
+        if (!emailLink) {
+            return;
+        }
+
+        if (auth.isSignInWithEmailLink(emailLink)) {
+            let emailAddress = localStorage.getItem("emailAddress");
+
+            if (!emailAddress) {
+                this.props.history.push("/");
+
+                return;
+            }
+
+            authentication
+                .signInWithEmailLink(emailAddress, emailLink)
+                .then((value) => {
+                    const user = value.user;
+                    const displayName = user.displayName;
+                    const emailAddress = user.email;
+
+                    this.props.openSnackbar(
+                        `Signed in as ${displayName || emailAddress}`
+                    );
+                })
+                .catch((reason) => {
+                    const code = reason.code;
+                    const message = reason.message;
+
+                    switch (code) {
+                        case "auth/expired-action-code":
+                        case "auth/invalid-email":
+                        case "auth/user-disabled":
+                            this.props.openSnackbar(message);
+                            break;
+
+                        default:
+                            this.props.openSnackbar(message);
+                            return;
+                    }
+                })
+                .finally(() => {
+                    this.props.history.push("/");
+                });
+        }
+    };
+
+
     constructor(props) {
+
         super(props);
         this.toggleClass = this.toggleClass.bind(this);
         this.state = {
@@ -39,7 +110,21 @@ class Questions extends Component {
         this.setState({active: currentState});
     };
 
+
+
     render() {
+        const user = firebase.auth().currentUser;
+        var uid;
+        if (user != null) {
+            uid = user.uid
+        }
+        const userDb = firebase.database().ref('accounts/'+uid).set({
+            userID: uid,
+        })
+        const userRef = firebase.firestore().collection('accounts')
+
+        const userMBTIKey = firebase.database().ref().child('user').child(`type`).push().key;
+
         const questions = [{
             question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',
             answer_1: '풍부한 공감과 리액션을 해준다',
@@ -107,10 +192,9 @@ class Questions extends Component {
             let onclickDown = document.getElementsByClassName("onClick down");
             let resultScore = [0, 0, 0, 0];
             let resultMBTI;
-            // if(onclickUp.length + onclickDown.length != 12) {
-            //     alert('모든 질문에 체크해주세요.')
-            //     return;
-            // }
+            if(onclickUp.length + onclickDown.length != 12) {
+                alert('모든 질문에 체크해주세요.')
+            }
 
             for (let i = 0; i < onclickUp.length; i++) {
 
@@ -142,7 +226,14 @@ class Questions extends Component {
             } else {
                 resultMBTI += 'P'
             }
-
+            console.log(resultMBTI);
+            console.log(userRef);
+            firebase.database().ref('accounts/'+uid).update({
+                type: resultMBTI,
+            })
+            console.log(userDb);
+            console.log(user);
+            console.log(uid);
         }
 
         return <div className="voyage-test">

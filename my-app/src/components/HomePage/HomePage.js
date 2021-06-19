@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Button} from '@material-ui/core'
+import {Box, Button, ButtonGroup} from '@material-ui/core'
 
 import PropTypes from "prop-types";
 
@@ -14,10 +14,21 @@ import EmptyState from "../EmptyState";
 import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
 import { ReactComponent as InsertBlockIllustration } from "../../illustrations/insert-block.svg";
 import { ReactComponent as MBTI } from "../../illustrations/mbti.png";
+import {withStyles} from "@material-ui/core/styles";
+
+import SettingsDialog from '../SettingsDialog'
+
+import  firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/database';
+import 'firebase/functions';
 
 class HomePage extends Component {
   signInWithEmailLink = () => {
     const { user } = this.props;
+
 
     if (user) {
       return;
@@ -73,18 +84,43 @@ class HomePage extends Component {
 
   render() {
     const { user } = this.props;
+    const currentUser = firebase.auth().currentUser;
+    var uid;
+    if (user != null) {
+      uid = currentUser.uid
+    }
 
-    if (user) {
+    if (user && authentication.getProfileCompletion({...user})>=80) {
       return (
-          <EmptyState
-            id = 'Test Start'
-            image={<CabinIllustration/>}
-            variant='contained'
-            button = "Test Start"
-            description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
-          />
-
+          <Box
+              style={{ transform: "translate(-50%, -50%)" }}
+              position="absolute"
+              top="50%"
+              left="50%"
+              textAlign="center">
+            <div>당신과 맞는 성향의 사람을 찾아보세요.</div>
+            <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
+              <Button href={firebase.database().ref('accounts/'+uid).child('type') ?
+              './matching': './test'}> Test Start</Button>
+              <Button href='./mathcing'> Matching </Button>
+              <Button> Chatting </Button>
+            </ButtonGroup>
+          </Box>
       );
+    }
+    if (user && authentication.getProfileCompletion({...user})<80){
+      return (
+          <Box
+              style={{ transform: "translate(-50%, -50%)" }}
+              position="absolute"
+              top="50%"
+              left="50%"
+              textAlign="center">
+            <div>당신의 정보를 Setting에서 설정해주세요. 메일을 제외하고 사진과 모든 정보를 채워야 테스트가 가능합니다. </div>
+            <Button onClick={()=>SettingsDialog}> Setup </Button>
+
+          </Box>
+      )
     }
 
     return (

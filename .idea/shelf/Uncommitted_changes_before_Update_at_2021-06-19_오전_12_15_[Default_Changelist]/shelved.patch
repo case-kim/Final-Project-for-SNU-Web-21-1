@@ -1,0 +1,210 @@
+Index: my-app/src/components/Router/Router.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { Component } from \"react\";\r\n\r\nimport PropTypes from \"prop-types\";\r\n\r\nimport { BrowserRouter, Switch, Redirect, Route } from \"react-router-dom\";\r\n\r\nimport HomePage from \"../HomePage\";\r\nimport AdminPage from \"../AdminPage\";\r\nimport UserPage from \"../UserPage\";\r\nimport NotFoundPage from \"../NotFoundPage\";\r\nimport Questions from \"../Test/Questions\";\r\nimport Result from \"../Test/Result\";\r\n\r\nclass Router extends Component {\r\n  render() {\r\n    // Properties\r\n    const { user, roles, bar } = this.props;\r\n\r\n    // Functions\r\n    const { openSnackbar } = this.props;\r\n\r\n    return (\r\n      <BrowserRouter basename={process.env.REACT_APP_BASENAME}>\r\n        {bar}\r\n\r\n        <Switch>\r\n          <Route path=\"/\" exact>\r\n            <HomePage user={user} openSnackbar={openSnackbar} />\r\n          </Route>\r\n\r\n          <Route path=\"/admin\">\r\n            {user && roles.includes(\"admin\") ? (\r\n              <AdminPage />\r\n            ) : (\r\n              <Redirect to=\"/\" />\r\n            )}\r\n          </Route>\r\n\r\n          <Route path=\"/test\">\r\n            <Questions />\r\n          </Route>\r\n\r\n          <Route path=\"result\">\r\n            <Result />\r\n          </Route>\r\n\r\n          <Route path=\"/user/:userId\">\r\n            {user ? <UserPage /> : <Redirect to=\"/\" />}\r\n          </Route>\r\n\r\n          <Route>\r\n            <NotFoundPage />\r\n          </Route>\r\n        </Switch>\r\n      </BrowserRouter>\r\n    );\r\n  }\r\n}\r\n\r\nRouter.propTypes = {\r\n  // Properties\r\n  user: PropTypes.object,\r\n  roles: PropTypes.array.isRequired,\r\n  bar: PropTypes.element,\r\n\r\n  // Functions\r\n  openSnackbar: PropTypes.func.isRequired,\r\n};\r\n\r\nexport default Router;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/Router/Router.js b/my-app/src/components/Router/Router.js
+--- a/my-app/src/components/Router/Router.js	(revision 953b2f8b8a62bf67c0f2dbbbfaf2ae0baf0fe26d)
++++ b/my-app/src/components/Router/Router.js	(date 1624026104743)
+@@ -48,6 +48,10 @@
+             {user ? <UserPage /> : <Redirect to="/" />}
+           </Route>
+ 
++          {/*<Route path='/testResult:userID'>*/}
++          {/*  {user? <TestResult/> : <Redirect to ="/"/>}*/}
++          {/*</Route>*/}
++
+           <Route>
+             <NotFoundPage />
+           </Route>
+Index: my-app/src/components/HomePage/HomePage.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { Component } from \"react\";\r\nimport {Button} from '@material-ui/core'\r\n\r\nimport PropTypes from \"prop-types\";\r\n\r\nimport { withRouter } from \"react-router-dom\";\r\n\r\nimport { auth } from \"../../firebase\";\r\n\r\nimport authentication from \"../../services/authentication\";\r\n\r\nimport EmptyState from \"../EmptyState\";\r\n\r\nimport { ReactComponent as CabinIllustration } from \"../../illustrations/cabin.svg\";\r\nimport { ReactComponent as InsertBlockIllustration } from \"../../illustrations/insert-block.svg\";\r\nimport { ReactComponent as MBTI } from \"../../illustrations/mbti.png\";\r\n\r\nclass HomePage extends Component {\r\n  signInWithEmailLink = () => {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return;\r\n    }\r\n\r\n    const emailLink = window.location.href;\r\n\r\n    if (!emailLink) {\r\n      return;\r\n    }\r\n\r\n    if (auth.isSignInWithEmailLink(emailLink)) {\r\n      let emailAddress = localStorage.getItem(\"emailAddress\");\r\n\r\n      if (!emailAddress) {\r\n        this.props.history.push(\"/\");\r\n\r\n        return;\r\n      }\r\n\r\n      authentication\r\n        .signInWithEmailLink(emailAddress, emailLink)\r\n        .then((value) => {\r\n          const user = value.user;\r\n          const displayName = user.displayName;\r\n          const emailAddress = user.email;\r\n\r\n          this.props.openSnackbar(\r\n            `Signed in as ${displayName || emailAddress}`\r\n          );\r\n        })\r\n        .catch((reason) => {\r\n          const code = reason.code;\r\n          const message = reason.message;\r\n\r\n          switch (code) {\r\n            case \"auth/expired-action-code\":\r\n            case \"auth/invalid-email\":\r\n            case \"auth/user-disabled\":\r\n              this.props.openSnackbar(message);\r\n              break;\r\n\r\n            default:\r\n              this.props.openSnackbar(message);\r\n              return;\r\n          }\r\n        })\r\n        .finally(() => {\r\n          this.props.history.push(\"/\");\r\n        });\r\n    }\r\n  };\r\n\r\n  render() {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return (\r\n          <EmptyState\r\n            id = 'Test Start'\r\n            image={<CabinIllustration/>}\r\n            variant='contained'\r\n            button = \"Test Start\"\r\n            description=\"당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요.\"\r\n          />\r\n\r\n      );\r\n    }\r\n\r\n    return (\r\n      <EmptyState\r\n        image={<InsertBlockIllustration />}\r\n        button  =\"RMUIF\"\r\n        description=\"Supercharged version of Create React App with all the bells and whistles.\"\r\n      />\r\n    );\r\n  }\r\n\r\n  componentDidMount() {\r\n    this.signInWithEmailLink();\r\n  }\r\n}\r\n\r\nHomePage.propTypes = {\r\n  user: PropTypes.object,\r\n};\r\n\r\nexport default withRouter(HomePage);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/HomePage/HomePage.js b/my-app/src/components/HomePage/HomePage.js
+--- a/my-app/src/components/HomePage/HomePage.js	(revision 953b2f8b8a62bf67c0f2dbbbfaf2ae0baf0fe26d)
++++ b/my-app/src/components/HomePage/HomePage.js	(date 1624026812385)
+@@ -1,5 +1,5 @@
+ import React, { Component } from "react";
+-import {Button} from '@material-ui/core'
++import {Button, ButtonGroup} from '@material-ui/core'
+ 
+ import PropTypes from "prop-types";
+ 
+@@ -76,16 +76,34 @@
+ 
+     if (user) {
+       return (
+-          <EmptyState
+-            id = 'Test Start'
+-            image={<CabinIllustration/>}
+-            variant='contained'
+-            button = "Test Start"
+-            description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
+-          />
++          <ButtonGroup>
++            <Button variant = 'contained' path = '/test'> Test Start</Button>
++            <Button> Matching </Button>
++            <Button> Chatting </Button>
++          </ButtonGroup>
++          // <EmptyState
++          //   id = 'Test Start'
++          //   image={<CabinIllustration/>}
++          //   variant='contained'
++          //   button = "Test Start"
++          //   description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++          // />
+ 
+       );
++
+     }
++    // if (user && result) {
++    //   return (
++    //       <EmptyState
++    //           id = 'meetPeople'
++    //           image={<CabinIllustration/>}
++    //           variant='contained'
++    //           button = "Meet People"
++    //           description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++    //       />
++    //
++    //   );
++    // }
+ 
+     return (
+       <EmptyState
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f204b82d-829e-4ee4-8cb5-306e6077eff9\" name=\"Default Changelist\" comment=\"Try to Edit the Homepage\">\r\n      <change afterPath=\"$PROJECT_DIR$/my-app/src/illustrations/mbti.svg\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1u2V2UP51ZxIkwv9M6TWuXKBq14\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../SNU MBTI Matching V3/SNU-MBTI-V3\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f204b82d-829e-4ee4-8cb5-306e6077eff9\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1623863474684</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1623863474684</updated>\r\n      <workItem from=\"1623863482218\" duration=\"9324000\" />\r\n      <workItem from=\"1623881385276\" duration=\"1271000\" />\r\n      <workItem from=\"1623909728007\" duration=\"904000\" />\r\n      <workItem from=\"1623915790887\" duration=\"648000\" />\r\n      <workItem from=\"1623944489695\" duration=\"723000\" />\r\n      <workItem from=\"1623952052783\" duration=\"5490000\" />\r\n      <workItem from=\"1623992662715\" duration=\"9326000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Update Firebase ID in .env\">\r\n      <created>1623864913912</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1623864913912</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Try to Edit the Homepage\">\r\n      <created>1623992726912</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1623992726912</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Try to Edit the Homepage\">\r\n      <created>1623992763985</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1623992763985</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"4\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Update Firebase ID in .env\" />\r\n    <MESSAGE value=\"Try to Edit the Homepage\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Try to Edit the Homepage\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 953b2f8b8a62bf67c0f2dbbbfaf2ae0baf0fe26d)
++++ b/.idea/workspace.xml	(date 1624029056019)
+@@ -2,15 +2,22 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Try to Edit the Homepage">
+-      <change afterPath="$PROJECT_DIR$/my-app/src/illustrations/mbti.svg" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/my-app/src/components/ChatList.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/EmptyState/EmptyState.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/my-app/src/components/Router/Router.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/Router/Router.js" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="JavaScript File" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -25,7 +32,7 @@
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SNU MBTI Matching V3/SNU-MBTI-V3" />
++    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/SNU-traveler" />
+     <property name="nodejs_package_manager_path" value="npm" />
+     <property name="vue.rearranger.settings.migration" value="true" />
+   </component>
+@@ -43,7 +50,7 @@
+       <workItem from="1623915790887" duration="648000" />
+       <workItem from="1623944489695" duration="723000" />
+       <workItem from="1623952052783" duration="5490000" />
+-      <workItem from="1623992662715" duration="9326000" />
++      <workItem from="1623992662715" duration="20930000" />
+     </task>
+     <task id="LOCAL-00001" summary="Update Firebase ID in .env">
+       <created>1623864913912</created>
+@@ -66,7 +73,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1623992763985</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="Try to Edit the Homepage">
++      <created>1624002236991</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1624002236991</updated>
++    </task>
++    <option name="localTasksCounter" value="5" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -89,4 +103,16 @@
+     <MESSAGE value="Try to Edit the Homepage" />
+     <option name="LAST_COMMIT_MESSAGE" value="Try to Edit the Homepage" />
+   </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="javascript">
++          <url>file://$PROJECT_DIR$/my-app/src/components/HomePage/HomePage.js</url>
++          <line>73</line>
++          <properties lambdaOrdinal="-1" />
++          <option name="timeStamp" value="2" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
+ </project>
+\ No newline at end of file
+Index: my-app/src/components/ChatList.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/ChatList.js b/my-app/src/components/ChatList.js
+new file mode 100644
+--- /dev/null	(date 1624026104786)
++++ b/my-app/src/components/ChatList.js	(date 1624026104786)
+@@ -0,0 +1,33 @@
++import React, { Component } from "react";
++import {Button} from '@material-ui/core'
++
++import PropTypes from "prop-types";
++
++import { withRouter } from "react-router-dom";
++
++import { auth } from "../../firebase";
++
++import authentication from "../../services/authentication";
++
++import EmptyState from "../EmptyState";
++
++import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
++import { ReactComponent as InsertBlockIllustration } from "../../illustrations/insert-block.svg";
++import { ReactComponent as MBTI } from "../../illustrations/mbti.png";
++
++class ChatList extends Component {
++
++
++
++    render(){
++        const {myType} = this.props;
++
++        <div>
++            <Button id = 'myType'></Button>
++            {
++
++            }
++        </div>
++    }
++
++}

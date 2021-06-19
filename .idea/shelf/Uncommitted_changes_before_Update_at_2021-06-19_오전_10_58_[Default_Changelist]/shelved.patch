@@ -1,0 +1,145 @@
+Index: my-app/src/components/HomePage/HomePage.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, { Component } from \"react\";\r\nimport {Button} from '@material-ui/core'\r\n\r\nimport PropTypes from \"prop-types\";\r\n\r\nimport { withRouter } from \"react-router-dom\";\r\n\r\nimport { auth } from \"../../firebase\";\r\n\r\nimport authentication from \"../../services/authentication\";\r\n\r\nimport EmptyState from \"../EmptyState\";\r\n\r\nimport { ReactComponent as CabinIllustration } from \"../../illustrations/cabin.svg\";\r\nimport { ReactComponent as InsertBlockIllustration } from \"../../illustrations/insert-block.svg\";\r\nimport { ReactComponent as MBTI } from \"../../illustrations/mbti.png\";\r\n\r\nclass HomePage extends Component {\r\n  signInWithEmailLink = () => {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return;\r\n    }\r\n\r\n    const emailLink = window.location.href;\r\n\r\n    if (!emailLink) {\r\n      return;\r\n    }\r\n\r\n    if (auth.isSignInWithEmailLink(emailLink)) {\r\n      let emailAddress = localStorage.getItem(\"emailAddress\");\r\n\r\n      if (!emailAddress) {\r\n        this.props.history.push(\"/\");\r\n\r\n        return;\r\n      }\r\n\r\n      authentication\r\n        .signInWithEmailLink(emailAddress, emailLink)\r\n        .then((value) => {\r\n          const user = value.user;\r\n          const displayName = user.displayName;\r\n          const emailAddress = user.email;\r\n\r\n          this.props.openSnackbar(\r\n            `Signed in as ${displayName || emailAddress}`\r\n          );\r\n        })\r\n        .catch((reason) => {\r\n          const code = reason.code;\r\n          const message = reason.message;\r\n\r\n          switch (code) {\r\n            case \"auth/expired-action-code\":\r\n            case \"auth/invalid-email\":\r\n            case \"auth/user-disabled\":\r\n              this.props.openSnackbar(message);\r\n              break;\r\n\r\n            default:\r\n              this.props.openSnackbar(message);\r\n              return;\r\n          }\r\n        })\r\n        .finally(() => {\r\n          this.props.history.push(\"/\");\r\n        });\r\n    }\r\n  };\r\n\r\n  render() {\r\n    const { user } = this.props;\r\n\r\n    if (user) {\r\n      return (\r\n          <EmptyState\r\n            id = 'Test Start'\r\n            image={<CabinIllustration/>}\r\n            variant='contained'\r\n            button = \"Test Start\"\r\n            description=\"당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요.\"\r\n          />\r\n\r\n      );\r\n    }\r\n\r\n    return (\r\n      <EmptyState\r\n        image={<InsertBlockIllustration />}\r\n        button  =\"RMUIF\"\r\n        description=\"Supercharged version of Create React App with all the bells and whistles.\"\r\n      />\r\n    );\r\n  }\r\n\r\n  componentDidMount() {\r\n    this.signInWithEmailLink();\r\n  }\r\n}\r\n\r\nHomePage.propTypes = {\r\n  user: PropTypes.object,\r\n};\r\n\r\nexport default withRouter(HomePage);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/HomePage/HomePage.js b/my-app/src/components/HomePage/HomePage.js
+--- a/my-app/src/components/HomePage/HomePage.js	(revision ac8e0cc88f071a8cf77c8c98a5110e36b500783d)
++++ b/my-app/src/components/HomePage/HomePage.js	(date 1624042430712)
+@@ -1,5 +1,5 @@
+ import React, { Component } from "react";
+-import {Button} from '@material-ui/core'
++import {Box, Button, ButtonGroup} from '@material-ui/core'
+ 
+ import PropTypes from "prop-types";
+ 
+@@ -76,16 +76,42 @@
+ 
+     if (user) {
+       return (
+-          <EmptyState
+-            id = 'Test Start'
+-            image={<CabinIllustration/>}
+-            variant='contained'
+-            button = "Test Start"
+-            description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
+-          />
++          <Box
++              style={{ transform: "translate(-50%, -50%)" }}
++              position="absolute"
++              top="50%"
++              left="50%"
++              textAlign="center">
++            <div>당신과 맞는 성향의 사람을 찾아보세요.</div>
++            <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
++              <Button href='./test'> Test Start</Button>
++              <Button> Matching </Button>
++              <Button> Chatting </Button>
++            </ButtonGroup>
++          </Box>
++          // <EmptyState
++          //   id = 'Test Start'
++          //   image={<CabinIllustration/>}
++          //   variant='contained'
++          //   button = "Test Start"
++          //   description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++          // />
+ 
+       );
++
+     }
++    // if (user && result) {
++    //   return (
++    //       <EmptyState
++    //           id = 'meetPeople'
++    //           image={<CabinIllustration/>}
++    //           variant='contained'
++    //           button = "Meet People"
++    //           description="당신과 가장 성격이 잘 맞을 거 같은 사람을 찾아보세요."
++    //       />
++    //
++    //   );
++    // }
+ 
+     return (
+       <EmptyState
+Index: my-app/src/components/ChatList.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/ChatList.js b/my-app/src/components/ChatList.js
+new file mode 100644
+--- /dev/null	(date 1624042430734)
++++ b/my-app/src/components/ChatList.js	(date 1624042430734)
+@@ -0,0 +1,2 @@
++import { BrowserRouter, Switch, Route } from 'react-router-dom'
++
+Index: my-app/src/components/Test/Questions.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {Component} from \"react\";\r\nimport {Link, withRouter} from 'react-router-dom';\r\nimport {Button} from '@material-ui/core';\r\n\r\nclass Questions extends Component {\r\n    constructor(props) {\r\n        super(props);\r\n        this.toggleClass = this.toggleClass.bind(this);\r\n        this.state = {\r\n            active: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],\r\n        };\r\n    }\r\n\r\n    toggleClass(index) {\r\n        let currentState = this.state.active;\r\n        if (this.state.active[index] === true) {\r\n            currentState[index] = false;\r\n        } else {\r\n            currentState[index] = true;\r\n            if (this.state.active[index + 12] === true) {\r\n                this.state.active[index + 12] = false;\r\n            }\r\n        }\r\n\r\n        this.setState({active: currentState});\r\n    };\r\n\r\n    toggleClass_1(index) {\r\n        let currentState = this.state.active;\r\n        if (this.state.active[index] === true) {\r\n            currentState[index] = false;\r\n        } else {\r\n            currentState[index] = true;\r\n            if (this.state.active[index - 12] === true) {\r\n                this.state.active[index - 12] = false;\r\n            }\r\n        }\r\n\r\n        this.setState({active: currentState});\r\n    };\r\n\r\n    render() {\r\n        const questions = [{\r\n            question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',\r\n            answer_1: '풍부한 공감과 리액션을 해준다',\r\n            answer_2: '이것저것 궁금한 것을 질문한다',\r\n            question_type: '0'\r\n        }, {\r\n            question: '갑작스러운 여행으로 혼자 오게 된 낯선 장소, 이런 곳에서 나는',\r\n            answer_1: '혼자 조용히 여행을 즐긴다',\r\n            answer_2: '여행 중 만난 사람들과 쉽게 친해진다',\r\n            question_type: '1'\r\n        }, {\r\n            question: '여행지에서 친구가 평소 필요로 했던 선물이 생각날 때 나는',\r\n            answer_1: '난 역시 섬세한 사람이야',\r\n            answer_2: '나는 역시 기억력이 좋아',\r\n            question_type: '0'\r\n        }, {\r\n            question: '돌아온 숙소, 게스트하우스 사람들과 맥주를 마시러 온 나는',\r\n            answer_1: '묵묵히 사람들의 이야기를 듣는다',\r\n            answer_2: '대화를 주도하며 분위기를 이끈다',\r\n            question_type: '1'\r\n        }, {\r\n            question: '늦은 저녁, 룸메이트가 오늘 크게 넘어졌다고 얘기할 때 나는 ',\r\n            answer_1: '내가 다친 것처럼 공감하며 걱정을 한다',\r\n            answer_2: '왜 다쳤는지 물어보고 근처 약국을 알려준다',\r\n            question_type: '0'\r\n        }, {\r\n            question: '잠들기 전, 가족과 통화에서 나는',\r\n            answer_1: '구체적으로 있었던 일을 얘기한다',\r\n            answer_2: '오늘 느꼈던 큰 감정을 얘기한다',\r\n            question_type: '2'\r\n        }, {\r\n            question: '룸메이트가 어제 다녀왔던 맛집의 위치를 물어본다.',\r\n            answer_1: '숙소에서부터 가는 법을 알려준다',\r\n            answer_2: '식당 옆에 있는 큰 건물을 알려준다',\r\n            question_type: '2'\r\n        }, {\r\n            question: '멍~때리며 버스를 기다리는 중, 나는 어떤 생각을 할까? ',\r\n            answer_1: '\"오늘 저녁은…\" 남은 일정에 대해 생각한다',\r\n            answer_2: '\"내가 여기 산다면…\" 의식의 흐름에 따라 상상의 나래를 펼친다',\r\n            question_type: '2'\r\n        }, {\r\n            question: '아직 여행 마지막 날의 일정을 짜지 못한 나는',\r\n            answer_1: '미루다 전날 잠들기 직전에 짠다',\r\n            answer_2: '틈틈히 미리 루트를 구상해둔다',\r\n            question_type: '3'\r\n        }, {\r\n            question: '미리 찾아보았던 식당이 문을 닫았다. 나의 선택은?',\r\n            answer_1: '맛있어 보이는 옆 식당에 들어간다',\r\n            answer_2: '맛집을 다시 검색해서 찾아본다',\r\n            question_type: '3'\r\n        }, {\r\n            question: '여행중, 게스트하우스에서 가볍게 인사만 했던 사람과 우연히 마주친 나는? ',\r\n            answer_1: '간단히 인사만 하고 지나간다',\r\n            answer_2: '반가워하며 가벼운 대화를 이어나간다',\r\n            question_type: '1'\r\n        }, {\r\n            question: '마지막 여행지를 향해 걸어가던 중 새로운 장소를 발견한 나는 ',\r\n            answer_1: '어떤 장소인지 궁금하다. 일단 가서 구경한다',\r\n            answer_2: '우선 남은 일정에 무리가 없는지 고려해본다.',\r\n            question_type: '3'\r\n        },]\r\n\r\n        const submit = () => {\r\n            let onclickUp = document.getElementsByClassName(\"onClick up\");\r\n            let onclickDown = document.getElementsByClassName(\"onClick down\");\r\n            let resultScore = [0, 0, 0, 0];\r\n            let resultMBTI;\r\n            // if(onclickUp.length + onclickDown.length != 12) {\r\n            //     alert('모든 질문에 체크해주세요.')\r\n            //     return;\r\n            // }\r\n\r\n            for (let i = 0; i < onclickUp.length; i++) {\r\n\r\n                const index = onclickUp[i].getAttribute('question-type');\r\n                resultScore[index] += 1;\r\n            }\r\n            for (let j = 0; j < onclickDown.length; j++) {\r\n                const index = onclickDown[j].getAttribute('question-type');\r\n                resultScore[index] -= 1;\r\n            }\r\n\r\n            if (resultScore[1] < 0) {\r\n                resultMBTI = 'E'\r\n            } else {\r\n                resultMBTI = 'I'\r\n            }\r\n            if (resultScore[2] < 0) {\r\n                resultMBTI += 'N'\r\n            } else {\r\n                resultMBTI += 'S'\r\n            }\r\n            if (resultScore[0] < 0) {\r\n                resultMBTI += 'T'\r\n            } else {\r\n                resultMBTI += 'F'\r\n            }\r\n            if (resultScore[3] < 0) {\r\n                resultMBTI += 'J'\r\n            } else {\r\n                resultMBTI += 'P'\r\n            }\r\n\r\n        }\r\n\r\n        return <div className=\"voyage-test\">\r\n            <h2>여행 심리테스트</h2>\r\n            {\r\n                questions.map((question, index) => <div className=\"qa-container\" question-num={index}>\r\n                    <div className=\"question-container\">\r\n                        <div className=\"question\">\r\n                            {question.question}\r\n                        </div>\r\n                    </div>\r\n                    <div className=\"answer-container\">\r\n                        <Button variant=\"contained\" className={this.state.active[index] ? 'onClick up' : 'unClick up'}\r\n                                color={this.state.active[index] ? 'primary' : 'default'}\r\n                                onClick={this.toggleClass.bind(this, index)}\r\n                                question-type={question.question_type}>{question.answer_1}</Button>\r\n                        <Button variant=\"contained\"\r\n                                className={this.state.active[index + 12] ? 'onClick down' : 'unClick down'}\r\n                                color={this.state.active[index + 12] ? 'primary' : 'default'}\r\n                                onClick={this.toggleClass_1.bind(this, index + 12)}\r\n                                question-type={question.question_type}>{question.answer_2}</Button>\r\n                    </div>\r\n                </div>)\r\n            }\r\n            <Button component={Link} to=\"/result\" variant=\"contained\" color=\"primary\" onClick={submit}>\r\n                Submit\r\n            </Button>\r\n        </div>\r\n    }\r\n}\r\n\r\nexport default withRouter(Questions);
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my-app/src/components/Test/Questions.js b/my-app/src/components/Test/Questions.js
+--- a/my-app/src/components/Test/Questions.js	(revision ac8e0cc88f071a8cf77c8c98a5110e36b500783d)
++++ b/my-app/src/components/Test/Questions.js	(date 1624046373555)
+@@ -1,9 +1,22 @@
+-import React, {Component} from "react";
++import React, { useState, useEffect, Component } from 'react';
+ import {Link, withRouter} from 'react-router-dom';
+ import {Button} from '@material-ui/core';
+ 
++import  firebase from 'firebase/app';
++import 'firebase/firestore';
++import 'firebase/auth';
++import 'firebase/storage';
++import 'firebase/database';
++import 'firebase/functions';
++
++firebase.analytics();
++
+ class Questions extends Component {
++
++    state = {userMbti: 0};
++
+     constructor(props) {
++
+         super(props);
+         this.toggleClass = this.toggleClass.bind(this);
+         this.state = {
+@@ -39,7 +52,12 @@
+         this.setState({active: currentState});
+     };
+ 
++
++
+     render() {
++
++        const {userMbti} = this.state;
++
+         const questions = [{
+             question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',
+             answer_1: '풍부한 공감과 리액션을 해준다',
+@@ -142,6 +160,10 @@
+             } else {
+                 resultMBTI += 'P'
+             }
++            this.setState({userMbti: this.state.userMbti + resultMBTI})
++            console.log(userMbti);
++            console.log(resultMBTI);
++
+ 
+         }
+ 
+@@ -174,4 +196,4 @@
+     }
+ }
+ 
+-export default withRouter(Questions);
+\ No newline at end of file
++export default  withRouter(Questions);
+\ No newline at end of file

@@ -9,7 +9,7 @@ import AdminPage from "../AdminPage";
 import UserPage from "../UserPage";
 import NotFoundPage from "../NotFoundPage";
 import Questions from "../Test/Questions";
-import Result from "../Test/Result";
+import ShowResult from "../Test/Result";
 import Matching from "../Matching/Matching";
 
 class Router extends Component {
@@ -43,7 +43,7 @@ class Router extends Component {
                     </Route>
 
                     <Route path="/result">
-                        <Result/>
+                        <ShowResult/>
                     </Route>
 
                     <Route path="/matching">
