@@ -53,7 +53,12 @@ const ShowResult = () => {
             })
             myMBTIResult.child('context').on('value',function(context){
                 myContext = context.val()
-                document.getElementById('myContext').innerText = myContext;
+                console.log(myContext);
+                const contextArray = myContext.split('-').join("<br/>");
+                console.log(contextArray)
+                document.getElementById('myContext').innerHTML = contextArray;
+
+
             })
 
             myMBTIStorage.getDownloadURL().then(function(url){
@@ -65,13 +70,12 @@ const ShowResult = () => {
             })
         })
     },[])
-    console.log(myTitle);
     return(
         <div className="test-result">
             <h2>심리테스트 결과</h2>
             <div id = 'result'>
                 <img src = 'imageLink' id="myImage" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
-                <div id = 'myTestResult'>
+                <div id = 'myTestResult' text-align='center'>
                     <h4 id = 'mySubtitle'/>
                     <h3 id='myTitle'/>
                     <div id = 'myContext'/>

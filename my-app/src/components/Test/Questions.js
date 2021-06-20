@@ -229,6 +229,7 @@ class Questions extends Component {
                 resultMBTI += 'P'
             }
             const myDB = firebase.database().ref('accounts/'+uid)
+            const partnerList = firebase.database().ref('partnerList/')
             myDB.update({mbti: resultMBTI})
             const typeA = ['ESFJ','ESFP','ISFP','ISTP'];
             const typeB = ['ESTJ','ESTP','ISFJ','ISTJ'];
@@ -238,6 +239,11 @@ class Questions extends Component {
             if (typeA.includes(resultMBTI)) {
                 resultType = 'Type A'
                 myDB.update({type: resultType})
+                partnerList.child(`${resultType}/`+uid).set({
+                    userID: uid,
+                    mbti: resultMBTI
+                    }
+                )
             }
             if (typeB.includes(resultMBTI)) {
                 resultType = 'Type B'

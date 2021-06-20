@@ -3,6 +3,7 @@ import { Button, LinearProgress } from "@material-ui/core";
 import { useState } from "react";
 import Chat from "../Chat/Chat";
 import Loader from "../Loader";
+// import firebase, { analytics, auth, firestore, storage } from ".../firebase";
 
 const DetailModal = ({open}) => {
     const [isLoading, setLoadingState] = useState(false);
