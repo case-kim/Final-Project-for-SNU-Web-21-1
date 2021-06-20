@@ -28,7 +28,9 @@ const ShowResult = () => {
     const user = firebase.auth().currentUser;
     var uid;
     var myMBTI;
-    var putMBTI
+    var myTitle;
+    var mySubtitle;
+    var myContext;
     if (user != null) {
         uid = user.uid
     }
@@ -39,8 +41,20 @@ const ShowResult = () => {
     useEffect(()=> {
         myMBTISpace.on('value', function(snapshot) {
             myMBTI = snapshot.val()
+            const myMBTIResult = firebase.database().ref(`testResult/${myMBTI}`)
             const myMBTIStorage = firebase.storage().ref(`imageOfFlowers/${myMBTI}.png`);
-
+            myMBTIResult.child('title').on('value',function(context){
+                myTitle = context.val()
+                document.getElementById('myTitle').innerText = myTitle;
+            })
+            myMBTIResult.child('subtitle').on('value',function(context){
+                mySubtitle = context.val()
+                document.getElementById('mySubtitle').innerText = mySubtitle;
+            })
+            myMBTIResult.child('context').on('value',function(context){
+                myContext = context.val()
+                document.getElementById('myContext').innerText = myContext;
+            })
 
             myMBTIStorage.getDownloadURL().then(function(url){
                 console.log(url)
@@ -51,26 +65,22 @@ const ShowResult = () => {
             })
         })
     },[])
+    console.log(myTitle);
     return(
         <div className="test-result">
             <h2>심리테스트 결과</h2>
-            <img src = 'imageLink' id="myImage" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
+            <div id = 'result'>
+                <img src = 'imageLink' id="myImage" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
+                <div id = 'myTestResult'>
+                    <h4 id = 'mySubtitle'/>
+                    <h3 id='myTitle'/>
+                    <div id = 'myContext'/>
+                </div>
+            </div>
+
             <Button href='../matching' align='center' varaint = 'contained'>만나러 가기</Button>
         </div>
     )
-}
-
-class Result extends Component {
-
-    render() {
-
-
-        console.log(this.props.location)
-        return (<div className="test-result">
-            <h2>심리테스트 결과</h2>
-            <img src="imageLink" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
-        </div>)
-    }
 }
 
 export default ShowResult;
