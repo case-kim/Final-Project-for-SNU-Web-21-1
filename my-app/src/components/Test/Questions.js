@@ -231,14 +231,10 @@ class Questions extends Component {
             firebase.database().ref('accounts/'+uid).update({
                 mbti: resultMBTI,
             })
-            firebase.database().ref('accounts/'+uid).child('mbti').on('value',function (snapshot){
-                 myMBTI = JSON.stringify(snapshot)
-                stringMBTI = String.raw(myMBTI)
-            })
-            console.log(myMBTI);
-            console.log(stringMBTI)
-            console.log(user);
-            console.log(uid);
+            // firebase.database().ref('accounts/'+uid).child('mbti').on('value',function (snapshot){
+            //      myMBTI = JSON.stringify(snapshot)
+            //     stringMBTI = String.raw(myMBTI)
+            // })
         }
 
         return <div className="voyage-test">

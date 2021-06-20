@@ -27,26 +27,29 @@ import 'firebase/database';
 const ShowResult = () => {
     const user = firebase.auth().currentUser;
     var uid;
-    var myMBTI
+    var myMBTI;
+    var putMBTI
     if (user != null) {
         uid = user.uid
     }
-    var img = document.getElementById('myImage');
 
-    console.log(uid);
+    const myMBTISpace = firebase.database().ref(`accounts/${uid}/mbti`);
 
-    const myMBTISpace = firebase.database().ref(`accounts/${uid}`).child('mbti')
-    console.log(myMBTISpace)
-
+    console.log(myMBTI);
     useEffect(()=> {
-        const myMBTIStorage = firebase.storage().ref('imageOfMBTI/ISFP.jpg')
-        myMBTIStorage.getDownloadURL().then(function(url){
-            console.log(url)
-            const imageLink = url;
-            document.getElementById('myImage').src = imageLink;
-        }).catch(function(error) {
-            // Handle any errors
-        });
+        myMBTISpace.on('value', function(snapshot) {
+            myMBTI = snapshot.val()
+            const myMBTIStorage = firebase.storage().ref(`imageOfFlowers/${myMBTI}.png`);
+
+
+            myMBTIStorage.getDownloadURL().then(function(url){
+                console.log(url)
+                const imageLink = url;
+                document.getElementById('myImage').src = imageLink;
+            }).catch(function(error) {
+                // Handle any errors
+            })
+        })
     },[])
     return(
         <div className="test-result">
