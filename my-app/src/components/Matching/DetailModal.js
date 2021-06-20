@@ -10,7 +10,6 @@ const DetailModal = ({open}) => {
 
     if (!isLoading && open && !userData) {
         setLoadingState(true);
-        console.log('run');
         //API로 추가적 정보 로드
         setTimeout(() => {
             setUserData({
@@ -24,14 +23,17 @@ const DetailModal = ({open}) => {
 
     if (!open && isChatting) setIsChatting(false);
 
-    if (isLoading) return <div>사용자 데이터를 불러오는 중입니다 .. <LinearProgress /></div>
-    else if (isChatting) return <Chat />
-    else {
-        return <div id="card-modal">
-        기본 데이터 + {userData?.detail}
-        <Button onClick={() => setIsChatting(true)}>Start Chat</Button>
-        </div>
-    }
+    return <div className="card-modal">
+        {isLoading && <div>사용자 데이터를 불러오는 중입니다 .. <LinearProgress /></div>}
+        
+        {isChatting && <Chat />}
+
+        {!isLoading && !isChatting && <div>
+                기본 데이터 + {userData?.detail}
+                <Button onClick={() => setIsChatting(true)}>Start Chat</Button>
+            </div>}
+
+    </div>
 }
 
 export default DetailModal;
