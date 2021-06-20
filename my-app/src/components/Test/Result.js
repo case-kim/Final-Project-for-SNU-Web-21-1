@@ -36,6 +36,7 @@ const ShowResult = () => {
     console.log(uid);
 
     const myMBTISpace = firebase.database().ref(`accounts/${uid}`).child('mbti')
+    console.log(myMBTISpace)
 
     useEffect(()=> {
         const myMBTIStorage = firebase.storage().ref('imageOfMBTI/ISFP.jpg')
@@ -51,7 +52,6 @@ const ShowResult = () => {
         <div className="test-result">
             <h2>심리테스트 결과</h2>
             <img src = 'imageLink' id="myImage" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
-            <div>{myMBTISpace}</div>
             <Button href='../matching' align='center' varaint = 'contained'>만나러 가기</Button>
         </div>
     )
