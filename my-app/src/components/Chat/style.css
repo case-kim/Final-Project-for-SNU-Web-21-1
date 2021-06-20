@@ -1,0 +1,8 @@
+#chat-container {
+    min-width: 400px;
+}
+
+.right {
+    display: flex;
+    flex-direction: row-reverse;
+}
