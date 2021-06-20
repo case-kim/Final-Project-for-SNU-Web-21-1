@@ -116,6 +116,7 @@ class Questions extends Component {
         const user = firebase.auth().currentUser;
         var uid;
         var myMBTI;
+        var stringMBTI;
         if (user != null) {
             uid = user.uid
         }
@@ -232,8 +233,10 @@ class Questions extends Component {
             })
             firebase.database().ref('accounts/'+uid).child('mbti').on('value',function (snapshot){
                  myMBTI = JSON.stringify(snapshot)
+                stringMBTI = String.raw(myMBTI)
             })
             console.log(myMBTI);
+            console.log(stringMBTI)
             console.log(user);
             console.log(uid);
         }

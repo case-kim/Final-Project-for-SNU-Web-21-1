@@ -27,35 +27,32 @@ import 'firebase/database';
 const ShowResult = () => {
     const user = firebase.auth().currentUser;
     var uid;
-    var myMBTI;
+    var myMBTI
     if (user != null) {
         uid = user.uid
     }
+    var img = document.getElementById('myImage');
 
     console.log(uid);
 
     const myMBTISpace = firebase.database().ref(`accounts/${uid}`).child('mbti')
 
-    myMBTISpace.on('value',function (snapshot){
-        myMBTI = JSON.stringify(snapshot)
-        console.log(myMBTI)
-        firebase.storage().ref().child(`imageOfMBTI/${myMBTI}`).getDownloadURL().then(function(url){
-            var img = document.getElementById('myImage');
-            img.src = url
+    useEffect(()=> {
+        const myMBTIStorage = firebase.storage().ref('imageOfMBTI/ISFP.jpg')
+        myMBTIStorage.getDownloadURL().then(function(url){
+            console.log(url)
+            const imageLink = url;
+            document.getElementById('myImage').src = imageLink;
         }).catch(function(error) {
             // Handle any errors
         });
-    })
-
-    // console.log(myMBTI);
-
-
-
-
+    },[])
     return(
         <div className="test-result">
             <h2>심리테스트 결과</h2>
-            <img id='myImage'/>
+            <img src = 'imageLink' id="myImage" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
+            <div>{myMBTISpace}</div>
+            <Button href='../matching' align='center' varaint = 'contained'>만나러 가기</Button>
         </div>
     )
 }
@@ -64,11 +61,12 @@ class Result extends Component {
 
     render() {
 
+
         console.log(this.props.location)
-        return <div className="test-result">
+        return (<div className="test-result">
             <h2>심리테스트 결과</h2>
-            <img src='imageLink'/>
-        </div>
+            <img src="imageLink" height="450px" width="800px" align="center" style={{display:"block", margin: "0 auto"}}/>
+        </div>)
     }
 }
 
