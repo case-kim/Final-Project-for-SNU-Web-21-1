@@ -193,6 +193,7 @@ class Questions extends Component {
             let onclickDown = document.getElementsByClassName("onClick down");
             let resultScore = [0, 0, 0, 0];
             let resultMBTI;
+            let resultType;
             if(onclickUp.length + onclickDown.length != 12) {
                 alert('모든 질문에 체크해주세요.')
             }
@@ -227,14 +228,37 @@ class Questions extends Component {
             } else {
                 resultMBTI += 'P'
             }
-            console.log(resultMBTI);
-            firebase.database().ref('accounts/'+uid).update({
-                mbti: resultMBTI,
-            })
-            // firebase.database().ref('accounts/'+uid).child('mbti').on('value',function (snapshot){
-            //      myMBTI = JSON.stringify(snapshot)
-            //     stringMBTI = String.raw(myMBTI)
-            // })
+            const myDB = firebase.database().ref('accounts/'+uid)
+            const partnerList = firebase.database().ref('partnerList/')
+            myDB.update({mbti: resultMBTI})
+            const typeA = ['ESFJ','ESFP','ISFP','ISTP'];
+            const typeB = ['ESTJ','ESTP','ISFJ','ISTJ'];
+            const typeC = ['ENFJ','ENFP','INFJ','INFP'];
+            const typeD = ['ENTJ','ENTP','INTJ','INTP'];
+
+            if (typeA.includes(resultMBTI)) {
+                resultType = 'Type A'
+                myDB.update({type: resultType})
+                partnerList.child(`${resultType}/`+uid).set({
+                    userID: uid,
+                    mbti: resultMBTI
+                    }
+                )
+            }
+            if (typeB.includes(resultMBTI)) {
+                resultType = 'Type B'
+                myDB.update({type: resultType})
+            }
+            if (typeC.includes(resultMBTI)) {
+                resultType = 'Type C'
+                myDB.update({type: resultType})
+            }
+            if (typeD.includes(resultMBTI)) {
+                resultType = 'Type D'
+                myDB.update({type: resultType})
+            }
+            console.log(resultType)
+
         }
 
         return <div className="voyage-test">

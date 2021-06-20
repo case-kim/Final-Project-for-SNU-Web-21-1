@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f204b82d-829e-4ee4-8cb5-306e6077eff9" name="Default Changelist" comment="Try to Edit the Homepage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-app/src/components/Matching/DetailModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/Matching/DetailModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my-app/src/components/Test/Questions.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/Test/Questions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my-app/src/components/Test/Result.js" beforeDir="false" afterPath="$PROJECT_DIR$/my-app/src/components/Test/Result.js" afterDir="false" />
     </list>
@@ -70,7 +71,7 @@
       <workItem from="1623952052783" duration="5490000" />
       <workItem from="1623992662715" duration="9326000" />
       <workItem from="1624025391261" duration="13328000" />
-      <workItem from="1624164392167" duration="17115000" />
+      <workItem from="1624164392167" duration="32714000" />
     </task>
     <task id="LOCAL-00001" summary="Update Firebase ID in .env">
       <created>1623864913912</created>
@@ -128,11 +129,6 @@
           <url>file://$PROJECT_DIR$/my-app/src/components/Bar/Bar.js</url>
           <line>51</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/my-app/src/services/authentication.js</url>
-          <line>80</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/my-app/src/components/Router/Router.js</url>
