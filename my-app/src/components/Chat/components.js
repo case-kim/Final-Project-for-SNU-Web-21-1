@@ -16,7 +16,8 @@ const Dialog = ({chatLog, counterId}) => {
 const MessageInput = ({sendChat, isSending}) => {
 
     const [message, setMessage] = useState('');
-    const onClick = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         if (message) {
             sendChat(message);
             setMessage('');
@@ -25,10 +26,10 @@ const MessageInput = ({sendChat, isSending}) => {
         }
     }
 
-    return <div>
+    return <form onSubmit={onSubmit}>
         <input type="text" placeholder="메시지를 입력하세요" value={message} onChange={(e) => setMessage(e.target.value)} />
-        <Button onClick={onClick} disabled={isSending} variant="contained" color="primary">전송</Button>
-    </div>
+        <Button type="submit" disabled={isSending} variant="contained" color="primary">전송</Button>
+    </form>
 }
 
 export {Dialog, MessageInput};

@@ -34,9 +34,6 @@ const Chat = ({counterId}) => {
         setLoadingState(false);
     }
 
-    const firstChat = () => {
-    }
-
     const sendChat = async (message) => {
         //첫 챗이면 채팅방 만들기(add) 그럼 chatRoomId도 업데이트. 챗룸에 리스너 걸기.
         setSendingState(true);
@@ -48,18 +45,20 @@ const Chat = ({counterId}) => {
             isRead: false
         }
 
-        if (!chatRoomId) {
-            const createdChatRoom = await firestore.collection("chatRooms").add({
-                participants: [counterId, currentUser.uid],
-                messages: [messageInstance],
-            });
+        const chatRoomData = {
+            participants: [counterId, currentUser.uid],
+            messages: [...chatLog, messageInstance],
+        }
 
+        if (!chatRoomId) {
+            const createdChatRoom = await firestore.collection("chatRooms").add(chatRoomData);
             setChatRoomId(createdChatRoom.id);
-            
         } else {
             //update 형식
-
+            await firestore.collection("chatRooms").doc(chatRoomId).update(chatRoomData);
         }
+
+        setSendingState(false);
     }
 
     useEffect(() => {
