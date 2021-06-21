@@ -40,19 +40,19 @@ class Router extends Component {
                     </Route>
 
                     <Route path="/test">
-                        <Questions/>
+                        {user ? <Questions /> : <Redirect to="/" />}
                     </Route>
 
                     <Route path="/result">
-                        <ShowResult/>
+                        {user ? <ShowResult /> : <Redirect to="/" />}
                     </Route>
 
                     <Route path="/matching">
-                      <Matching />
+                        {user ? <Matching /> : <Redirect to="/" />}
                     </Route>
 
                     <Route path="/chatting">
-                        <ChatBoard />
+                        {user ? <ChatBoard /> : <Redirect to="/" />}
                     </Route>
 
                     <Route path="/user/:userId">
