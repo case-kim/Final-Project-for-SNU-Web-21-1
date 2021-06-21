@@ -15,6 +15,7 @@ import LaunchScreen from "../LaunchScreen";
 import Bar from "../Bar";
 import Router from "../Router";
 import DialogHost from "../DialogHost";
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   ready: false,
@@ -194,6 +195,10 @@ class App extends Component {
             this.closeAllDialogs(() => {
               this.openSnackbar("Signed out");
             });
+
+            this.setState({
+              user: null
+            })
           })
           .catch((reason) => {
             const code = reason.code;
