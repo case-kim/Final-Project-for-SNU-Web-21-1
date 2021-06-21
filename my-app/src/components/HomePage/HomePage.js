@@ -104,7 +104,7 @@ class HomePage extends Component {
               <Button href='./test'>Test Start</Button>
               <Button href='./result'>My Result</Button>
               <Button href='./matching'> Matching </Button>
-              <Button> Chatting </Button>
+              <Button href="./chatting"> Chatting </Button>
             </ButtonGroup>
           </Box>
       );

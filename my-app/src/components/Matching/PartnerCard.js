@@ -42,7 +42,7 @@ const PartnerCard = ({uid, username, type, title}) => {
         </Card>
 
         <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DetailModal open={modalOpen} counterId={uid} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
+            <DetailModal open={modalOpen} counterId={uid} counterName={username} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
         </Dialog>
     </div>
 }

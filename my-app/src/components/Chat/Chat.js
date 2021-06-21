@@ -4,10 +4,11 @@ import './style.css';
 import { Dialog, MessageInput } from './components';
 import { auth, firestore } from '../../firebase';
 
-const Chat = ({counterId}) => {
+const Chat = ({counterId, counterName = '상대'}) => {
 
     const currentUser = auth.currentUser;
 
+    const [init, setInit] = useState(false);
     const [isLoading, setLoadingState] = useState(true);
     const [isSending, setSendingState] = useState(false);
     const [chatLog, setChatLog] = useState([]);
@@ -48,6 +49,7 @@ const Chat = ({counterId}) => {
         const chatRoomData = {
             participants: [counterId, currentUser.uid],
             messages: [...chatLog, messageInstance],
+            lastMessage: messageInstance
         }
 
         if (!chatRoomId) {
@@ -63,7 +65,7 @@ const Chat = ({counterId}) => {
 
     useEffect(() => {
         figureChatRoom();
-    }, []);
+    }, [counterId]);
 
     useEffect(() => {
         if (chatRoomId) {
@@ -74,8 +76,10 @@ const Chat = ({counterId}) => {
         }
     }, [chatRoomId]);
 
+    if (!counterId) return <h1>채팅 상대를 선택하세요.</h1>
+
     return <div id="chat-container">
-        {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} />}
+        {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} counterName={counterName} />}
         {!isLoading && <MessageInput userId={currentUser.uid} sendChat={sendChat} isSending={isSending} />}
     </div>
 }
