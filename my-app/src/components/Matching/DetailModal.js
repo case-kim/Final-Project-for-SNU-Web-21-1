@@ -5,7 +5,7 @@ import Chat from "../Chat/Chat";
 import Loader from "../Loader";
 // import firebase, { analytics, auth, firestore, storage } from ".../firebase";
 
-const DetailModal = ({open, isChattingDefault, setParentIsChatting}) => {
+const DetailModal = ({open, isChattingDefault, setParentIsChatting, counterId}) => {
     const [isLoading, setLoadingState] = useState(false);
     const [userData, setUserData] = useState(null);
     const [isChatting, setIsChatting] = useState(isChattingDefault);
@@ -32,7 +32,7 @@ const DetailModal = ({open, isChattingDefault, setParentIsChatting}) => {
     return <div className="card-modal center">
         {isLoading && <div>사용자 데이터를 불러오는 중입니다 .. <LinearProgress /></div>}
         
-        {isChatting && <Chat />}
+        {isChatting && <Chat counterId={counterId} />}
 
         {!isLoading && !isChatting && 
             <Grid container>

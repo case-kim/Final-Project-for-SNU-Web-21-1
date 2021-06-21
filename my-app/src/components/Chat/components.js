@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const Dialog = ({chatLog, counterId}) => {
     return <div>
         {chatLog.map(chat => {
-            const sentByCounter = chat.sender === (counterId || 'B'); //임시로 상대 B로 둠(서버 연결 이후 || 이하 삭제)
+            const sentByCounter = chat.from === counterId;
 
             return <div className={sentByCounter ? '' : 'right'}>
                 {sentByCounter ? '상대' : '나'}: {chat.message}
@@ -13,18 +13,23 @@ const Dialog = ({chatLog, counterId}) => {
     </div>
 }
 
-const MessageInput = () => {
+const MessageInput = ({sendChat, isSending}) => {
 
     const [message, setMessage] = useState('');
-    const sendMsg = () => {
-        //API call
-        setMessage('');
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (message) {
+            sendChat(message);
+            setMessage('');
+        } else {
+            alert('메시지를 입력해주세요!')
+        }
     }
 
-    return <div>
+    return <form onSubmit={onSubmit}>
         <input type="text" placeholder="메시지를 입력하세요" value={message} onChange={(e) => setMessage(e.target.value)} />
-        <Button onClick={sendMsg}>전송</Button>
-    </div>
+        <Button type="submit" disabled={isSending} variant="contained" color="primary">전송</Button>
+    </form>
 }
 
 export {Dialog, MessageInput};
