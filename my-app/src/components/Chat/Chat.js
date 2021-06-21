@@ -23,7 +23,8 @@ const Chat = ({counterId}) => {
             //이 참여자들이 이미 채팅을 했을 경우
             if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
                 setChatRoomId(chatRoom.id);
-                setChatLog([...messages]);
+                const orderedMessages = messages.sort((a,b) => a.createdAt - b.createdAt);
+                setChatLog([...orderedMessages]);
                 setLoadingState(false);
                 return;
             }
@@ -68,7 +69,7 @@ const Chat = ({counterId}) => {
     useEffect(() => {
         if (chatRoomId) {
             firestore.collection("chatRooms").doc(chatRoomId).onSnapshot(snapshot => {
-                setChatLog([...snapshot.data().messages]);
+                setChatLog([...snapshot.data().messages.sort((a,b) => a.createdAt - b.createdAt)]);
                 setLoadingState(false);
             });
         }
