@@ -22,8 +22,6 @@ const Matching = ({type}) => {
         uid = user.uid
         myName = authentication.getFullName({...user})
     }
-    console.log(myName);
-
 
     const myDB = firebase.database().ref(`accounts/${uid}/`)
 
@@ -41,32 +39,27 @@ const Matching = ({type}) => {
             const myPartnerList = firebase.database().ref(`partnerList/${myType}/`)
             myPartnerList.on('value', function(partner){
                 const uidOfPartner = Object.keys(partner.val());
-                console.log(partner.val())
+
                 const res = [];
-                uidOfPartner.map(oneUid=> {
+                uidOfPartner.map((oneUid) => {
                     firebase.database().ref(`accounts/${oneUid}/userName`).on('value', function(name){
-                        const userRes = {'username': name.val(), 'type':myType}
-                        res.push(userRes)
-                    })
-                })
-                console.log(res);
-                setTimeout(() => {
-                    setPartners([...res]);
-                    setLoadingState(false);
-                }, 3000);
+                        const userRes = {'uid': oneUid, 'username': name.val(), 'type':myType}
+                        
+                        res.push(userRes);
+
+                        if(res.length === uidOfPartner.length) {
+                            setPartners([...res]);
+                            setLoadingState(false);
+                        }
+                    });
+                });
+
+                
             })
         })
-        // console.log(myType);
-        //
-        // const res = [
-        //     {'username': '상대1', 'type': 'A'},
-        //     {'username': '상대2', 'type': 'B'},
-        //     {'username': '상대3', 'type': 'A'},
-        // ]
-        // setTimeout(() => {
-        //     setPartners([...res]);
-        //     setLoadingState(false);
-        // }, 3000);
+
+        
+        
     }, []);
 
     if (isLoading) return <div>
