@@ -9,6 +9,7 @@ const Chat = ({counterId}) => {
     const currentUser = auth.currentUser;
 
     const [isLoading, setLoadingState] = useState(true);
+    const [isSending, setSendingState] = useState(false);
     const [chatLog, setChatLog] = useState([]);
 
     const [chatRoomId, setChatRoomId] = useState(null);
@@ -34,11 +35,31 @@ const Chat = ({counterId}) => {
     }
 
     const firstChat = () => {
-        //첫 챗에 채팅방 만들기. 그럼 chatRoomId도 업데이트. 챗룸에 리스너 걸기.
     }
 
-    const addChat = () => {
-        //update 형식
+    const sendChat = async (message) => {
+        //첫 챗이면 채팅방 만들기(add) 그럼 chatRoomId도 업데이트. 챗룸에 리스너 걸기.
+        setSendingState(true);
+
+        const messageInstance = {
+            createdAt: Date.now(),
+            message,
+            from: currentUser.uid,
+            isRead: false
+        }
+
+        if (!chatRoomId) {
+            const createdChatRoom = await firestore.collection("chatRooms").add({
+                participants: [counterId, currentUser.uid],
+                messages: [messageInstance],
+            });
+
+            setChatRoomId(createdChatRoom.id);
+            
+        } else {
+            //update 형식
+
+        }
     }
 
     useEffect(() => {
@@ -56,7 +77,7 @@ const Chat = ({counterId}) => {
 
     return <div id="chat-container">
         {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} />}
-        {!isLoading && <MessageInput />}
+        {!isLoading && <MessageInput userId={currentUser.uid} sendChat={sendChat} isSending={isSending} />}
     </div>
 }
 
