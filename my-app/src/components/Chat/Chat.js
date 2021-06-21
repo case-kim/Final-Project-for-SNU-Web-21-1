@@ -8,6 +8,7 @@ const Chat = ({counterId, counterName = '상대'}) => {
 
     const currentUser = auth.currentUser;
 
+    const [init, setInit] = useState(false);
     const [isLoading, setLoadingState] = useState(true);
     const [isSending, setSendingState] = useState(false);
     const [chatLog, setChatLog] = useState([]);
@@ -23,8 +24,7 @@ const Chat = ({counterId, counterName = '상대'}) => {
             //이 참여자들이 이미 채팅을 했을 경우
             if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
                 setChatRoomId(chatRoom.id);
-                const orderedMessages = messages.sort((a,b) => a.createdAt - b.createdAt);
-                setChatLog([...orderedMessages]);
+                setChatLog([...messages]);
                 setLoadingState(false);
                 return;
             }
@@ -49,6 +49,7 @@ const Chat = ({counterId, counterName = '상대'}) => {
         const chatRoomData = {
             participants: [counterId, currentUser.uid],
             messages: [...chatLog, messageInstance],
+            lastMessage: messageInstance
         }
 
         if (!chatRoomId) {
@@ -64,16 +65,18 @@ const Chat = ({counterId, counterName = '상대'}) => {
 
     useEffect(() => {
         figureChatRoom();
-    }, []);
+    }, [counterId]);
 
     useEffect(() => {
         if (chatRoomId) {
             firestore.collection("chatRooms").doc(chatRoomId).onSnapshot(snapshot => {
-                setChatLog([...snapshot.data().messages.sort((a,b) => a.createdAt - b.createdAt)]);
+                setChatLog([...snapshot.data().messages]);
                 setLoadingState(false);
             });
         }
     }, [chatRoomId]);
+
+    if (!counterId) return <h1>채팅 상대를 선택하세요.</h1>
 
     return <div id="chat-container">
         {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} counterName={counterName} />}

@@ -11,6 +11,7 @@ import NotFoundPage from "../NotFoundPage";
 import Questions from "../Test/Questions";
 import ShowResult from "../Test/Result";
 import Matching from "../Matching/Matching";
+import ChatBoard from "../Chat/ChatBoard";
 
 class Router extends Component {
 
@@ -48,6 +49,10 @@ class Router extends Component {
 
                     <Route path="/matching">
                       <Matching />
+                    </Route>
+
+                    <Route path="/chatting">
+                        <ChatBoard />
                     </Route>
 
                     <Route path="/user/:userId">
