@@ -6,7 +6,7 @@ import { useState } from 'react';
 import DetailModal from './DetailModal';
 import './style.css';
 
-const PartnerCard = ({username, type, title}) => {
+const PartnerCard = ({uid, username, type, title}) => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [isChatting, setIsChatting] = useState(false);
@@ -42,7 +42,7 @@ const PartnerCard = ({username, type, title}) => {
         </Card>
 
         <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DetailModal open={modalOpen} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
+            <DetailModal open={modalOpen} counterId={uid} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
         </Dialog>
     </div>
 }
