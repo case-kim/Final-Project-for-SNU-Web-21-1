@@ -23,18 +23,18 @@ const Chat = ({counterId}) => {
             if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
                 setChatRoomId(chatRoom.id);
                 setChatLog([...messages]);
+                setLoadingState(false);
+                return;
             }
 
-            //아니면 chatRoom은 null
         });
+
+        //아니면 chatRoom은 그대로 null
+        setLoadingState(false);
     }
 
-    const loadChat = () => {
-
-    }
-    
     const firstChat = () => {
-        //첫 챗에 채팅방 만들기. 그럼 chatRoom도 업데이트. 챗룸에 리스너 걸기.
+        //첫 챗에 채팅방 만들기. 그럼 chatRoomId도 업데이트. 챗룸에 리스너 걸기.
     }
 
     const addChat = () => {
@@ -48,9 +48,9 @@ const Chat = ({counterId}) => {
     useEffect(() => {
         if (chatRoomId) {
             firestore.collection("chatRooms").doc(chatRoomId).onSnapshot(snapshot => {
-                
+                setChatLog([...snapshot.data().messages]);
+                setLoadingState(false);
             });
-
         }
     }, [chatRoomId]);
 
