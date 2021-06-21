@@ -6,7 +6,7 @@ import { useState } from 'react';
 import DetailModal from './DetailModal';
 import './style.css';
 
-const PartnerCard = ({username, type}) => {
+const PartnerCard = ({username, type, title}) => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [isChatting, setIsChatting] = useState(false);
@@ -29,7 +29,7 @@ const PartnerCard = ({username, type}) => {
                     </Grid>
 
                     <Grid item xs={6}>
-                        <h2>혼자서도 매력적인,<br/>뭐시기뭐시기 입니다!</h2>
+                        <h2>혼자서도 매력적인,<br/>{title}</h2>
                         <ul>
                             <li>어쩌구</li>
                             <li>어쩌구</li>

@@ -39,19 +39,25 @@ const Matching = ({type}) => {
             const myPartnerList = firebase.database().ref(`partnerList/${myType}/`)
             myPartnerList.on('value', function(partner){
                 const uidOfPartner = Object.keys(partner.val());
-
                 const res = [];
                 uidOfPartner.map((oneUid) => {
-                    firebase.database().ref(`accounts/${oneUid}/userName`).on('value', function(name){
-                        const userRes = {'uid': oneUid, 'username': name.val(), 'type':myType}
-                        
-                        res.push(userRes);
+                    firebase.database().ref(`accounts/${oneUid}/mbti`).on('value', function(mbti) {
+                        const mbtiOfPartner = mbti.val();
+                        firebase.database().ref(`testResult/${mbtiOfPartner}/title`).on('value', function(title){
+                            const titleOfMbti = title.val();
+                            firebase.database().ref(`accounts/${oneUid}/userName`).on('value', function(name){
+                                const userRes = {'uid': oneUid, 'username': name.val(), 'type':myType, 'title': titleOfMbti}
+                                res.push(userRes);
 
-                        if(res.length === uidOfPartner.length) {
-                            setPartners([...res]);
-                            setLoadingState(false);
-                        }
-                    });
+                                if(res.length === uidOfPartner.length) {
+                                    setPartners([...res]);
+                                    setLoadingState(false);
+                                }
+                            });
+
+                        })
+                    })
+
                 });
 
                 

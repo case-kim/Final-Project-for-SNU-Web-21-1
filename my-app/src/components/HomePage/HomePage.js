@@ -101,7 +101,8 @@ class HomePage extends Component {
             <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
               {/*<Button href={firebase.database().ref('accounts/'+uid).child('type') ?*/}
               {/*  './matching': './test'}> Test Start</Button>*/}
-              <Button href='./test'> Test Start</Button>
+              <Button href='./test'>Test Start</Button>
+              <Button href='./result'>My Result</Button>
               <Button href='./matching'> Matching </Button>
               <Button> Chatting </Button>
             </ButtonGroup>
