@@ -115,13 +115,16 @@ class Questions extends Component {
     render() {
         const user = firebase.auth().currentUser;
         var uid;
-        var myMBTI;
-        var stringMBTI;
+        var myName;
         if (user != null) {
             uid = user.uid
+            myName = authentication.getFullName({...user})
         }
+        console.log(uid);
+        console.log(myName);
         const userDb = firebase.database().ref('accounts/'+uid).set({
             userID: uid,
+            userName: myName,
             type: null,
             mbti: null,
         })

@@ -48,8 +48,6 @@ const ShowResult = () => {
                 const contextArray = myContext.split('-').join("<br/>");
                 console.log(contextArray)
                 document.getElementById('myContext').innerHTML = contextArray;
-
-
             })
 
             myMBTIStorage.getDownloadURL().then(function(url){

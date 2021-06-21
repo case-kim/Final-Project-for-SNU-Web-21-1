@@ -13,7 +13,6 @@ import EmptyState from "../EmptyState";
 
 import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
 import { ReactComponent as InsertBlockIllustration } from "../../illustrations/insert-block.svg";
-import { ReactComponent as MBTI } from "../../illustrations/mbti.png";
 import {withStyles} from "@material-ui/core/styles";
 
 import SettingsDialog from '../SettingsDialog'
