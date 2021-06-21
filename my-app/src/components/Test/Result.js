@@ -1,13 +1,4 @@
-import {Link} from 'react-router-dom';
 import React, { Component, useState, useEffect } from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import
-    SearchIcon from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton';
 import { Button, ButtonGroup } from '@material-ui/core';
 
 import firebase from 'firebase/app';

@@ -230,6 +230,7 @@ class Questions extends Component {
             }
             const myDB = firebase.database().ref('accounts/'+uid)
             const partnerList = firebase.database().ref('partnerList/')
+
             myDB.update({mbti: resultMBTI})
             const typeA = ['ESFJ','ESFP','ISFP','ISTP'];
             const typeB = ['ESTJ','ESTP','ISFJ','ISTJ'];
@@ -248,17 +249,31 @@ class Questions extends Component {
             if (typeB.includes(resultMBTI)) {
                 resultType = 'Type B'
                 myDB.update({type: resultType})
+                partnerList.child(`${resultType}/`+uid).set({
+                        userID: uid,
+                        mbti: resultMBTI
+                    }
+                )
             }
             if (typeC.includes(resultMBTI)) {
                 resultType = 'Type C'
                 myDB.update({type: resultType})
+                partnerList.child(`${resultType}/`+uid).set({
+                        userID: uid,
+                        mbti: resultMBTI
+                    }
+                )
             }
             if (typeD.includes(resultMBTI)) {
                 resultType = 'Type D'
                 myDB.update({type: resultType})
+                partnerList.child(`${resultType}/`+uid).set({
+                        userID: uid,
+                        mbti: resultMBTI
+                    }
+                )
             }
             console.log(resultType)
-
         }
 
         return <div className="voyage-test">
