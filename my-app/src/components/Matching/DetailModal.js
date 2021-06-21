@@ -5,12 +5,12 @@ import Chat from "../Chat/Chat";
 import Loader from "../Loader";
 // import firebase, { analytics, auth, firestore, storage } from ".../firebase";
 
-const DetailModal = ({open}) => {
+const DetailModal = ({open, isChattingDefault, setParentIsChatting}) => {
     const [isLoading, setLoadingState] = useState(false);
     const [userData, setUserData] = useState(null);
-    const [isChatting, setIsChatting] = useState(false);
+    const [isChatting, setIsChatting] = useState(isChattingDefault);
 
-    if (!isLoading && open && !userData) {
+    if (!isLoading && open && !userData && !isChatting) {
         setLoadingState(true);
         //API로 추가적 정보 로드
         setTimeout(() => {
@@ -24,7 +24,10 @@ const DetailModal = ({open}) => {
         }, 3000);
     }
 
-    if (!open && isChatting) setIsChatting(false);
+    if (!open && isChatting) {
+        setIsChatting(false);
+        setParentIsChatting(false);
+    }
 
     return <div className="card-modal center">
         {isLoading && <div>사용자 데이터를 불러오는 중입니다 .. <LinearProgress /></div>}
@@ -45,7 +48,7 @@ const DetailModal = ({open}) => {
                     <ul>
                         {[1,2,3,4].map(num => <li>설명{num}입니다. 설명{num} 블라블라</li>)}
                     </ul>
-                    <Button onClick={() => setIsChatting(true)}>Start Chat</Button>
+                    <Button onClick={() => setIsChatting(true)} variant="outlined" color="primary">Start Chat</Button>
                 </Grid>
             </Grid>}
 

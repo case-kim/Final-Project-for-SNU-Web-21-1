@@ -1,5 +1,5 @@
 import { Dialog, Modal } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useState } from 'react';
@@ -9,6 +9,12 @@ import './style.css';
 const PartnerCard = ({username, type}) => {
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [isChatting, setIsChatting] = useState(false);
+    
+    const onChatClick = () => {
+        setIsChatting(true);
+        setModalOpen(true);
+    }
 
     return <div className="card-container">
         <Card className="card" variant="outlined" onClick={() => setModalOpen(true)}>
@@ -29,13 +35,14 @@ const PartnerCard = ({username, type}) => {
                             <li>어쩌구</li>
                             <li>어쩌구</li>
                         </ul>
+                        <Button onClick={onChatClick} variant="outlined" color="primary">Start Chat</Button>
                     </Grid>
                 </Grid>
             </CardContent>
         </Card>
 
         <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DetailModal open={modalOpen} />
+            <DetailModal open={modalOpen} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
         </Dialog>
     </div>
 }
