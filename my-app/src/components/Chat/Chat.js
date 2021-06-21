@@ -4,7 +4,7 @@ import './style.css';
 import { Dialog, MessageInput } from './components';
 import { auth, firestore } from '../../firebase';
 
-const Chat = ({counterId}) => {
+const Chat = ({counterId, counterName = '상대'}) => {
 
     const currentUser = auth.currentUser;
 
@@ -76,7 +76,7 @@ const Chat = ({counterId}) => {
     }, [chatRoomId]);
 
     return <div id="chat-container">
-        {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} />}
+        {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} counterName={counterName} />}
         {!isLoading && <MessageInput userId={currentUser.uid} sendChat={sendChat} isSending={isSending} />}
     </div>
 }

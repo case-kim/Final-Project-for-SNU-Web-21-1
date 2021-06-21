@@ -1,13 +1,13 @@
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
-const Dialog = ({chatLog, counterId}) => {
+const Dialog = ({chatLog, counterId, counterName}) => {
     return <div>
         {chatLog.map(chat => {
             const sentByCounter = chat.from === counterId;
 
             return <div className={sentByCounter ? '' : 'right'}>
-                {sentByCounter ? '상대' : '나'}: {chat.message}
+                {sentByCounter ? counterName : '나'}: {chat.message}
             </div>
         })}
     </div>
