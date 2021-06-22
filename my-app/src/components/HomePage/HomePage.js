@@ -94,7 +94,8 @@ class HomePage extends Component {
         const myDB = firebase.database().ref(`accounts/${uid}`)
         myDB.once('value')
             .then(function(snapshot){
-                if(!document.getElementById('testButton') && authentication.getProfileCompletion({...user}) >= 80&&!snapshot.hasChildren()) {
+                if(document.getElementById('buttonGroup') && !document.getElementById('testButton') && user
+                    && authentication.getProfileCompletion({...user}) >= 80&&!snapshot.hasChildren()) {
                     const testButton = document.createElement('button')
                     const test = document.createElement('a')
                     testButton.appendChild(test);
@@ -103,7 +104,8 @@ class HomePage extends Component {
                     test.innerHTML = 'TEST START'
                     document.getElementById('buttonGroup').appendChild(testButton)
                 }
-                if (!document.getElementById('resultButton') && user && authentication.getProfileCompletion({...user}) >= 80&&snapshot.hasChildren()){
+                if (document.getElementById('buttonGroup') && !document.getElementById('resultButton') && user
+                    && authentication.getProfileCompletion({...user}) >= 80&&snapshot.hasChildren()){
                     const resultButton = document.createElement('button')
                     const matchButton = document.createElement('button')
                     const chatButton = document.createElement('button')
@@ -117,7 +119,7 @@ class HomePage extends Component {
                     matchButton.appendChild(match);
                     chatButton.appendChild(chat);
                     result.href = './result'
-                    match.href = './match'
+                    match.href = './matching'
                     chat.href = './chatting'
                     result.innerHTML = 'MY RESULT'
                     match.innerHTML = 'MATCHING'
