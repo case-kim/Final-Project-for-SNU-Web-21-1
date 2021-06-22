@@ -199,6 +199,7 @@ class Questions extends Component {
             let resultType;
             if(onclickUp.length + onclickDown.length != 12) {
                 alert('모든 질문에 체크해주세요.')
+                return;
             }
 
             for (let i = 0; i < onclickUp.length; i++) {
@@ -277,6 +278,9 @@ class Questions extends Component {
                 )
             }
             console.log(resultType)
+
+            this.props.history.push("/result")
+
         }
 
         return <div className="voyage-test">
@@ -301,7 +305,7 @@ class Questions extends Component {
                     </div>
                 </div>)
             }
-            <Button component={Link} to="/result" variant="contained" color="primary" onClick={submit}>
+            <Button variant="contained" color="primary" onClick={submit}>
                 제출하기
             </Button>
         </div>
