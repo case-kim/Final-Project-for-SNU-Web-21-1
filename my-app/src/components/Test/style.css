@@ -1,0 +1,55 @@
+.voyage-test {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 25%;
+    margin-bottom: 10%;
+}
+
+.qa-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 0.5px dotted #888888 ;
+}
+
+.question-container {
+    font-size: 22px;
+    line-height: 34px;
+    letter-spacing: -0.5px;
+    padding: 20px 0;
+    padding-top: 50px;
+}
+
+.answer-container {
+    width: 50%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.up, .down {
+    width: 100%;
+    height: 66px;
+    margin-bottom: 8px;
+}
+
+#title {
+    font-size: 30px;
+    font-family: "Nanum Gothic";
+}
+
+#submit {
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+}

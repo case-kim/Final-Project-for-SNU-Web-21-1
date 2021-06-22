@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button} from '@material-ui/core';
+import {Button, Box} from '@material-ui/core';
 
-import  firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
@@ -10,14 +10,17 @@ import 'firebase/database';
 import 'firebase/functions';
 import {auth} from "../../firebase";
 import authentication from "../../services/authentication";
+import './style.css';
+
 
 firebase.analytics();
+
 // const uid = firebase.auth().currentUser.uid;
 
 class Questions extends Component {
 
     signInWithEmailLink = () => {
-        const { user } = this.props;
+        const {user} = this.props;
 
 
         if (user) {
@@ -111,7 +114,6 @@ class Questions extends Component {
     };
 
 
-
     render() {
         const user = firebase.auth().currentUser;
         var uid;
@@ -122,7 +124,7 @@ class Questions extends Component {
         }
         console.log(uid);
         console.log(myName);
-        const userDb = firebase.database().ref('accounts/'+uid).set({
+        const userDb = firebase.database().ref('accounts/' + uid).set({
             userID: uid,
             userName: myName,
             type: null,
@@ -197,7 +199,7 @@ class Questions extends Component {
             let resultScore = [0, 0, 0, 0];
             let resultMBTI;
             let resultType;
-            if(onclickUp.length + onclickDown.length != 12) {
+            if (onclickUp.length + onclickDown.length != 12) {
                 alert('모든 질문에 체크해주세요.')
                 return;
             }
@@ -232,28 +234,28 @@ class Questions extends Component {
             } else {
                 resultMBTI += 'P'
             }
-            const myDB = firebase.database().ref('accounts/'+uid)
+            const myDB = firebase.database().ref('accounts/' + uid)
             const partnerList = firebase.database().ref('partnerList/')
 
             myDB.update({mbti: resultMBTI})
-            const typeA = ['ESFJ','ESFP','ISFP','ISTP'];
-            const typeB = ['ESTJ','ESTP','ISFJ','ISTJ'];
-            const typeC = ['ENFJ','ENFP','INFJ','INFP'];
-            const typeD = ['ENTJ','ENTP','INTJ','INTP'];
+            const typeA = ['ESFJ', 'ESFP', 'ISFP', 'ISTP'];
+            const typeB = ['ESTJ', 'ESTP', 'ISFJ', 'ISTJ'];
+            const typeC = ['ENFJ', 'ENFP', 'INFJ', 'INFP'];
+            const typeD = ['ENTJ', 'ENTP', 'INTJ', 'INTP'];
 
             if (typeA.includes(resultMBTI)) {
                 resultType = 'Type A'
                 myDB.update({type: resultType})
-                partnerList.child(`${resultType}/`+uid).set({
-                    userID: uid,
-                    mbti: resultMBTI
+                partnerList.child(`${resultType}/` + uid).set({
+                        userID: uid,
+                        mbti: resultMBTI
                     }
                 )
             }
             if (typeB.includes(resultMBTI)) {
                 resultType = 'Type B'
                 myDB.update({type: resultType})
-                partnerList.child(`${resultType}/`+uid).set({
+                partnerList.child(`${resultType}/` + uid).set({
                         userID: uid,
                         mbti: resultMBTI
                     }
@@ -262,7 +264,7 @@ class Questions extends Component {
             if (typeC.includes(resultMBTI)) {
                 resultType = 'Type C'
                 myDB.update({type: resultType})
-                partnerList.child(`${resultType}/`+uid).set({
+                partnerList.child(`${resultType}/` + uid).set({
                         userID: uid,
                         mbti: resultMBTI
                     }
@@ -271,7 +273,7 @@ class Questions extends Component {
             if (typeD.includes(resultMBTI)) {
                 resultType = 'Type D'
                 myDB.update({type: resultType})
-                partnerList.child(`${resultType}/`+uid).set({
+                partnerList.child(`${resultType}/` + uid).set({
                         userID: uid,
                         mbti: resultMBTI
                     }
@@ -284,7 +286,7 @@ class Questions extends Component {
         }
 
         return <div className="voyage-test">
-            <h2>여행 심리테스트</h2>
+            <h2 id="title">여행 심리테스트</h2>
             {
                 questions.map((question, index) => <div className="qa-container" question-num={index}>
                     <div className="question-container">
@@ -293,19 +295,24 @@ class Questions extends Component {
                         </div>
                     </div>
                     <div className="answer-container">
-                        <Button variant="contained" className={this.state.active[index] ? 'onClick up' : 'unClick up'}
-                                color={this.state.active[index] ? 'primary' : 'default'}
-                                onClick={this.toggleClass.bind(this, index)}
-                                question-type={question.question_type}>{question.answer_1}</Button>
-                        <Button variant="contained"
-                                className={this.state.active[index + 12] ? 'onClick down' : 'unClick down'}
-                                color={this.state.active[index + 12] ? 'primary' : 'default'}
-                                onClick={this.toggleClass_1.bind(this, index + 12)}
-                                question-type={question.question_type}>{question.answer_2}</Button>
+                        <Box mb={1}>
+                            <Button variant="contained"
+                                    className={this.state.active[index] ? 'onClick up' : 'unClick up'}
+                                    color={this.state.active[index] ? 'primary' : 'default'}
+                                    onClick={this.toggleClass.bind(this, index)}
+                                    question-type={question.question_type}>{question.answer_1}</Button>
+                        </Box>
+                        <Box mb={1}>
+                            <Button variant="contained"
+                                    className={this.state.active[index + 12] ? 'onClick down' : 'unClick down'}
+                                    color={this.state.active[index + 12] ? 'primary' : 'default'}
+                                    onClick={this.toggleClass_1.bind(this, index + 12)}
+                                    question-type={question.question_type}>{question.answer_2}</Button>
+                        </Box>
                     </div>
                 </div>)
             }
-            <Button variant="contained" color="primary" onClick={submit}>
+            <Button id="submit" variant="contained" color="secondary" onClick={submit}>
                 제출하기
             </Button>
         </div>
