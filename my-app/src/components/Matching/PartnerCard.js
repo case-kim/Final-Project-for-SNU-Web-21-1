@@ -3,10 +3,7 @@ import { Grid, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import React, { useState, useEffect } from 'react';
-import DetailModal from './DetailModal';
 import './style.css';
-import PropTypes from "prop-types";
-import UserAvatar from "../UserAvatar";
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -14,13 +11,13 @@ import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/database';
 
+import Chat from '../Chat/Chat';
 
 const PartnerCard = ({user, uid, username, type, title}) => {
 
     const avatarImage = firebase.storage().ref(`images/avatars/${uid}`);
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [isChatting, setIsChatting] = useState(false);
 
     useEffect(()=>{
         avatarImage.getDownloadURL().then(function(url) {
@@ -33,12 +30,6 @@ const PartnerCard = ({user, uid, username, type, title}) => {
         })
     },[])
     
-    const onChatClick = () => {
-        setIsChatting(true);
-        setModalOpen(true);
-    }
-
-
     return <div className="card-container">
         <Card className="card" variant="outlined" onClick={() => setModalOpen(true)}>
             <CardContent>
@@ -58,14 +49,16 @@ const PartnerCard = ({user, uid, username, type, title}) => {
                             <li>어쩌구</li>
                             <li>어쩌구</li>
                         </ul>
-                        <Button onClick={onChatClick} variant="outlined" color="primary">Start Chat</Button>
+                        <Button onClick={() => setModalOpen(true)} variant="outlined" color="primary">Start Chat</Button>
                     </Grid>
                 </Grid>
             </CardContent>
         </Card>
 
         <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DetailModal open={modalOpen} counterId={uid} counterName={username} isChattingDefault={isChatting} setParentIsChatting={setIsChatting}/>
+            <div className="card-modal center">        
+                {modalOpen && <Chat counterId={uid} counterName={username} />}
+            </div>
         </Dialog>
     </div>
 }
