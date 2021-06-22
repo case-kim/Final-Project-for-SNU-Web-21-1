@@ -8,13 +8,14 @@ const Chat = ({counterId, counterName}) => {
 
     const currentUser = auth.currentUser;
 
-    const [init, setInit] = useState(false);
     const [isLoading, setLoadingState] = useState(true);
     const [isSending, setSendingState] = useState(false);
     const [chatLog, setChatLog] = useState([]);
 
     const [chatRoomId, setChatRoomId] = useState(null);
     const [loadedCounterName, setCounterName] = useState(counterName);
+
+    const [listener, setListener] = useState(null);
 
     const figureChatRoom = async () => {
         const chatRooms = await firestore.collection("chatRooms").get();
@@ -77,9 +78,17 @@ const Chat = ({counterId, counterName}) => {
 
     useEffect(() => {
         if (chatRoomId) {
-            firestore.collection("chatRooms").doc(chatRoomId).onSnapshot(snapshot => {
-                setChatLog([...snapshot.data().messages]);
-                setLoadingState(false);
+            
+            if (listener) {
+                listener();
+            }
+            let newListener = firestore.collection("chatRooms").doc(chatRoomId).onSnapshot(snapshot => {
+                    setChatLog([...snapshot.data().messages]);
+                    setLoadingState(false);
+            });
+
+            setListener(() => () => {
+                newListener();
             });
         }
     }, [chatRoomId]);
@@ -87,6 +96,7 @@ const Chat = ({counterId, counterName}) => {
     if (!counterId) return <h1>채팅 상대를 선택하세요.</h1>
 
     return <div id="chat-container">
+        {!isLoading && <div className="header">{loadedCounterName}님과의 채팅</div>}
         {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} counterName={loadedCounterName} />}
         {!isLoading && <MessageInput userId={currentUser.uid} sendChat={sendChat} isSending={isSending} />}
     </div>
