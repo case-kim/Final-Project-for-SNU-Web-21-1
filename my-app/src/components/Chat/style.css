@@ -2,6 +2,12 @@
     min-width: 400px;
 }
 
+.header {
+    background-color: pink;
+    text-align: center;
+    font-weight: bold;
+}
+
 .counter {
     display: flex;
     justify-content: flex-end;
