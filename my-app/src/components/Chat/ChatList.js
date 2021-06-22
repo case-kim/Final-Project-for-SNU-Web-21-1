@@ -1,38 +1,23 @@
-import { Button } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { firestore } from '../../firebase';
+import moment from 'moment';
 
-
-const ChatList = ({userId, setCurrentCounterId}) => {
-
-    const [chatList, setChatList] = useState([]);
-
-    const loadList = () => {
-        //그냥 채팅 전체를 추적하고 있어야 새 챗도 볼 수 있음
-        firestore.collection("chatRooms").onSnapshot(snapshot => {
-            let userRooms = [];
-            snapshot.docs.forEach(room => {
-                if (room.data().participants.includes(userId)) userRooms.push(room.data());
-            });
-
-            userRooms = userRooms.sort((a,b) => b.lastMessage.createdAt - a.lastMessage.createdAt);
-            setChatList([...userRooms]);
-        });
-    }
+const ChatList = ({userId, setCurrentCounterId, chatList}) => {
 
     const onRoomClick = (e) => {
         setCurrentCounterId(e.target.name);
     };
 
-    useEffect(() => {
-        loadList();
-    });
-
-    return <ul>
-        
+    return <ul>  
         {chatList.map(room => {
-            return <Button onClick={onRoomClick} name={room.participants.find(id => id !== userId)}>
-                {room.lastMessage.message}</Button>
+
+            const { counterName, participants, lastMessage: {message, from, createdAt} } = room;
+
+            return <button onClick={onRoomClick} name={participants.find(id => id !== userId)}>
+                <h3>{counterName}</h3>
+                <p>
+                    {from === userId ? '나' : counterName}: {message}<br/>
+                    {moment(new Date(createdAt)).fromNow()}
+                </p>
+            </button>
         })}
     </ul>
 }

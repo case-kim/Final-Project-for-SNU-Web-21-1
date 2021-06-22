@@ -17,6 +17,8 @@ import Router from "../Router";
 import DialogHost from "../DialogHost";
 import { useHistory } from "react-router-dom";
 
+import 'moment/locale/ko';
+
 const initialState = {
   ready: false,
   performingAction: false,
