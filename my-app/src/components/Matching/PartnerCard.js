@@ -2,19 +2,42 @@ import { Dialog, Modal } from '@material-ui/core';
 import { Grid, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DetailModal from './DetailModal';
 import './style.css';
+import PropTypes from "prop-types";
+import UserAvatar from "../UserAvatar";
 
-const PartnerCard = ({uid, username, type, title}) => {
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/database';
+
+
+const PartnerCard = ({user, uid, username, type, title}) => {
+
+    const avatarImage = firebase.storage().ref(`images/avatars/${uid}`);
 
     const [modalOpen, setModalOpen] = useState(false);
     const [isChatting, setIsChatting] = useState(false);
+
+    useEffect(()=>{
+        avatarImage.getDownloadURL().then(function(url) {
+            console.log(url);
+            const partnerImage = document.createElement('img')
+            partnerImage.src = url;
+            partnerImage.width = 200;
+            partnerImage.height = 200;
+            document.getElementById(uid).appendChild(partnerImage);
+        })
+    },[])
     
     const onChatClick = () => {
         setIsChatting(true);
         setModalOpen(true);
     }
+
 
     return <div className="card-container">
         <Card className="card" variant="outlined" onClick={() => setModalOpen(true)}>
@@ -24,12 +47,12 @@ const PartnerCard = ({uid, username, type, title}) => {
                         <b>이름: {username}</b>
                         <b>타입: {type}</b>
                     </Grid>
-                    <Grid item xs={6}>
-                        <img src="https://mblogthumb-phinf.pstatic.net/20161004_87/by267_1475545735829x3bvR_JPEG/%BC%AD%BF%EF%B4%EB%C7%D0%B1%B3%B7%CE%B0%ED-06.jpg?type=w800" />
+                    <Grid item xs={6} id={uid} >
+
                     </Grid>
 
                     <Grid item xs={6}>
-                        <h2>혼자서도 매력적인,<br/>{title}</h2>
+                        <h2>{title}</h2>
                         <ul>
                             <li>어쩌구</li>
                             <li>어쩌구</li>
@@ -46,5 +69,7 @@ const PartnerCard = ({uid, username, type, title}) => {
         </Dialog>
     </div>
 }
+
+
 
 export default PartnerCard;

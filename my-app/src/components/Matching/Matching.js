@@ -22,7 +22,6 @@ const Matching = ({type}) => {
         uid = user.uid
         myName = authentication.getFullName({...user})
     }
-
     const myDB = firebase.database().ref(`accounts/${uid}/`)
 
 
@@ -48,7 +47,7 @@ const Matching = ({type}) => {
                             firebase.database().ref(`testResult/${mbtiOfPartner}/title`).on('value', function(title){
                                 const titleOfMbti = title.val();
                                 firebase.database().ref(`accounts/${oneUid}/userName`).on('value', function(name){
-                                    const userRes = {'uid': oneUid, 'username': name.val(), 'type':myType, 'title': titleOfMbti}
+                                    const userRes = {'user': user, 'uid': oneUid, 'username': name.val(), 'type':myType, 'title': titleOfMbti}
                                     res.push(userRes);
 
                                     if(res.length === uidOfPartner.length-1) {
@@ -60,15 +59,9 @@ const Matching = ({type}) => {
                             })
                         })
                     }
-
-                });
-
-                
+                })
             })
         })
-
-        
-        
     }, []);
 
     if (isLoading) return <div>

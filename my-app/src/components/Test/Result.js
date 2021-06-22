@@ -9,11 +9,6 @@ import 'firebase/database';
 
 
 
-// const Result = (user) => {
-//     const queryURL = `users_mbti/${user}/type`
-//     const query = firebase.database().ref(queryURL);
-// }
-
 
 const ShowResult = () => {
     const user = firebase.auth().currentUser;

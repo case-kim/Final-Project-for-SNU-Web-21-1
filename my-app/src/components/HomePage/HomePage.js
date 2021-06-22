@@ -88,6 +88,8 @@ class HomePage extends Component {
     if (user != null) {
       uid = currentUser.uid
     }
+    const myDB = firebase.database().ref(`accounts/${uid}`)
+
 
     if (user && authentication.getProfileCompletion({...user})>=80) {
       return (
@@ -99,8 +101,6 @@ class HomePage extends Component {
               textAlign="center">
             <div>당신과 맞는 성향의 사람을 찾아보세요.</div>
             <ButtonGroup variant = 'contained' display='flex' flex-direction = 'column'>
-              {/*<Button href={firebase.database().ref('accounts/'+uid).child('type') ?*/}
-              {/*  './matching': './test'}> Test Start</Button>*/}
               <Button href='./test'>Test Start</Button>
               <Button href='./result'>My Result</Button>
               <Button href='./matching'> Matching </Button>
