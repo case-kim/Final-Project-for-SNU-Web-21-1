@@ -5,6 +5,7 @@ import Chat from "./Chat";
 import ChatList from "./ChatList";
 import { firestore } from '../../firebase';
 import Loader from "../Loader";
+import firebase from 'firebase/app';
 
 const ChatBoard = () => {
 
@@ -25,19 +26,21 @@ const ChatBoard = () => {
             });
 
             userRooms = userRooms.sort((a,b) => b.lastMessage.createdAt - a.lastMessage.createdAt).map(async(room) => {
-                const counterName = await getCounterName(room);
-                return {...room, counterName}
+                const counterId = room.participants.find(p => p !== user.uid);
+                const counterName = await getCounterName(counterId);
+                const counterPic = await firebase.storage().ref(`images/avatars/${counterId}`).getDownloadURL();
+                return {...room, counterName, counterPic, counterId}
             });
 
-            const userRoomsWithCounterName = await Promise.all(userRooms);
+            const userRoomsWithCounterData = await Promise.all(userRooms);
 
-            setChatList([...userRoomsWithCounterName]);
+            setChatList([...userRoomsWithCounterData]);
             setLoadingState(false);
         });
     }
 
-    const getCounterName = async (room) => {
-        const counterDoc = firestore.collection("users").doc(room.participants.find(p => p !== user.uid));
+    const getCounterName = async (counterId) => {
+        const counterDoc = firestore.collection("users").doc(counterId);
         const counter = await counterDoc.get();
         return counter.data().username;
     }
