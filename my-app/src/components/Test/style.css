@@ -8,6 +8,16 @@
     margin-bottom: 10%;
 }
 
+.test-result {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 25%;
+    margin-bottom: 10%;
+}
+
 .qa-container {
     width: 100%;
     display: flex;
@@ -28,7 +38,6 @@
     width: 50%;
     padding-top: 20px;
     padding-bottom: 50px;
-    font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.5px;
     line-height: 20px;
@@ -42,14 +51,48 @@
     margin-bottom: 8px;
 }
 
-#title {
+.title {
     font-size: 30px;
     font-family: "Nanum Gothic";
 }
 
-#submit {
+.submit {
     width: 200px;
     height: 50px;
     font-size: 16px;
     font-weight: bold;
 }
+
+#myImage {
+    margin-bottom: 30px;
+}
+
+#mySubtitle {
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: -0.5px;
+    color: dodgerblue;
+}
+
+#myTitle {
+    font-family: "Nanum Gothic";
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    padding: 0 0 60px;
+}
+
+#myTestResult {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#myContext {
+    width: 70%;
+    white-space: pre-wrap;
+    font-size: 16px;
+    line-height: 1.7em;
+}
+

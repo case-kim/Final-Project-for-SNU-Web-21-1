@@ -169,7 +169,7 @@ class Questions extends Component {
         }, {
             question: '멍~때리며 버스를 기다리는 중, 나는 어떤 생각을 할까? ',
             answer_1: '"오늘 저녁은…" 남은 일정에 대해 생각한다',
-            answer_2: '"내가 여기 산다면…" 의식의 흐름에 따라 상상의 나래를 펼친다',
+            answer_2: '"내가 여기 산다면…" 상상의 나래를 펼친다',
             question_type: '2'
         }, {
             question: '아직 여행 마지막 날의 일정을 짜지 못한 나는',
@@ -286,7 +286,7 @@ class Questions extends Component {
         }
 
         return <div className="voyage-test">
-            <h2 id="title">여행 심리테스트</h2>
+            <h2 className="title">여행 심리테스트</h2>
             {
                 questions.map((question, index) => <div className="qa-container" question-num={index}>
                     <div className="question-container">
@@ -300,6 +300,7 @@ class Questions extends Component {
                                     className={this.state.active[index] ? 'onClick up' : 'unClick up'}
                                     color={this.state.active[index] ? 'primary' : 'default'}
                                     onClick={this.toggleClass.bind(this, index)}
+                                    style={{fontSize:'16px'}}
                                     question-type={question.question_type}>{question.answer_1}</Button>
                         </Box>
                         <Box mb={1}>
@@ -307,12 +308,13 @@ class Questions extends Component {
                                     className={this.state.active[index + 12] ? 'onClick down' : 'unClick down'}
                                     color={this.state.active[index + 12] ? 'primary' : 'default'}
                                     onClick={this.toggleClass_1.bind(this, index + 12)}
+                                    style={{fontSize:'16px'}}
                                     question-type={question.question_type}>{question.answer_2}</Button>
                         </Box>
                     </div>
                 </div>)
             }
-            <Button id="submit" variant="contained" color="secondary" onClick={submit}>
+            <Button className="submit" variant="contained" color="secondary" onClick={submit}>
                 제출하기
             </Button>
         </div>

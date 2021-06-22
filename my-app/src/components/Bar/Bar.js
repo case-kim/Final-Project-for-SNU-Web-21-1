@@ -95,7 +95,7 @@ class Bar extends Component {
                 to="/"
                 underline="none"
               >
-                {process.env.REACT_APP_TITLE}
+                SNU Flower Matching
               </Link>
             </Typography>
           </Box>
