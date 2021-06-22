@@ -2,7 +2,20 @@
     min-width: 400px;
 }
 
-.right {
+.counter {
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.dialog {
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.date {
+    text-align: center;
+}
+
+.message {
+    display: flex;
 }
