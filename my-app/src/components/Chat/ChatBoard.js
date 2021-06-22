@@ -28,7 +28,14 @@ const ChatBoard = () => {
             userRooms = userRooms.sort((a,b) => b.lastMessage.createdAt - a.lastMessage.createdAt).map(async(room) => {
                 const counterId = room.participants.find(p => p !== user.uid);
                 const counterName = await getCounterName(counterId);
-                const counterPic = await firebase.storage().ref(`images/avatars/${counterId}`).getDownloadURL();
+                let counterPic;
+
+                try {
+                    counterPic = await firebase.storage().ref(`images/avatars/${counterId}`).getDownloadURL();
+                } catch {
+                    counterPic = 'https://i.stack.imgur.com/34AD2.jpg';
+                }
+
                 return {...room, counterName, counterPic, counterId}
             });
 
@@ -41,8 +48,14 @@ const ChatBoard = () => {
 
     const getCounterName = async (counterId) => {
         const counterDoc = firestore.collection("users").doc(counterId);
-        const counter = await counterDoc.get();
-        return counter.data().username;
+        let counterName;
+        try {
+            counterName = await counterDoc.get();
+            counterName = counterName.data().username;
+        } catch(e) {
+            counterName = '상대';
+        }
+        return counterName;
     }
 
     useEffect(() => {
