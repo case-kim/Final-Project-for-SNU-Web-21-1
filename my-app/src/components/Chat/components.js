@@ -1,8 +1,24 @@
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import React from 'react';
 
 const Dialog = ({chatLog, counterId, counterName}) => {
-    return <div>
+
+    const dialogContainer = React.createRef();
+
+    const scrollToRef = () => {
+        const scroll =
+          dialogContainer.current.scrollHeight -
+          dialogContainer.current.clientHeight;
+        dialogContainer.current.scrollTo(0, scroll);
+    };
+
+    useEffect(() => {
+        scrollToRef();
+    }, [chatLog])
+
+
+    return <div className="dialog" ref={dialogContainer}>
         {chatLog.map(chat => {
             const sentByCounter = chat.from === counterId;
 
