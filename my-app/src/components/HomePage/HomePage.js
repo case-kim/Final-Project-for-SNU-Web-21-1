@@ -162,8 +162,8 @@ class HomePage extends Component {
                         <div className="homepage-subtitle">당신과 맞는 사람을 찾아보세요.</div>
                         <div className="homepage-title">SNU Flower Matching</div>
                         <ButtonGroup id='buttonGroup' color='primary' aria-label='large outlined primary button group'>
-                            {tabs.map(tab => {
-                                return <Button><Link to={tab.to}>{tab.name}</Link></Button>
+                            {tabs.map((tab,index) => {
+                                return <Button key={index}><Link to={tab.to}>{tab.name}</Link></Button>
                             })}
                         </ButtonGroup>
                     </Box>

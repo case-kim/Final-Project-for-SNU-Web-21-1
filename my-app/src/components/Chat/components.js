@@ -39,7 +39,7 @@ const Dialog = ({chatLog, counterId, counterName}) => {
                 hideName = (formerOne.from === chat.from) && sentByCounter;
             }
 
-            return <>
+            return <div key={index}>
                 {!hideDate && <div className="date"><h3>-{moment(new Date(chat.createdAt)).format('MMM Do')}-</h3></div>}
 
                 <div className={`message ${sentByCounter ? '' : 'counter'}`}>
@@ -49,7 +49,7 @@ const Dialog = ({chatLog, counterId, counterName}) => {
                         {!hideTime && <div>{moment(new Date(chat.createdAt)).format('HH:mm')}</div>}
                     </div>
                 </div>
-            </>
+            </div>
         })}
     </div>
 }

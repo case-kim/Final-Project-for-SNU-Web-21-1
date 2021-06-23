@@ -9,11 +9,11 @@ const ChatList = ({userId, setCurrentCounterId, chatList}) => {
     };
 
     return <List>  
-        {chatList.map(room => {
+        {chatList.map((room, index) => {
 
             const { counterPic, counterName, counterId, lastMessage: {message, from, createdAt} } = room;
 
-            return <ListItem alignItems="flex-start" onClick={(e) => onRoomClick(e)} style={{cursor: 'pointer'}} uid={counterId}>
+            return <ListItem key={index} alignItems="flex-start" onClick={(e) => onRoomClick(e)} style={{cursor: 'pointer'}} uid={counterId}>
                 <ListItemAvatar>
                     <Avatar alt="counterPic" src={counterPic} />
                 </ListItemAvatar>
