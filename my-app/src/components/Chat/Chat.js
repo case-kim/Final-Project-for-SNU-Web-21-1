@@ -20,16 +20,13 @@ const Chat = ({counterId, counterName}) => {
     const figureChatRoom = async () => {
         const chatRooms = await firestore.collection("chatRooms").get();
         chatRooms.forEach(chatRoom => {
-            const { participants, messages } = chatRoom.data();
+            const { participants } = chatRoom.data();
 
             //이 참여자들이 이미 채팅을 했을 경우
             if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
                 setChatRoomId(chatRoom.id);
-                setChatLog([...messages]);
-                setLoadingState(false);
                 return;
             }
-
         });
 
         //아니면 chatRoom은 그대로 null
