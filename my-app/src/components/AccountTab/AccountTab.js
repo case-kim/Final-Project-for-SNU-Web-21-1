@@ -286,10 +286,10 @@ class AccountTab extends Component {
                 firstName: constraints.firstName,
             }
         );
-
+        
         if (errors) {
             this.setState({
-                errors: errors,
+                errors: {firstName: ['형식을 확인해 주세요.']}
             });
 
             return;
@@ -363,7 +363,7 @@ class AccountTab extends Component {
 
         if (errors) {
             this.setState({
-                errors: errors,
+                errors: {lastName: ['형식을 확인해 주세요.']},
             });
 
             return;
@@ -1325,7 +1325,7 @@ class AccountTab extends Component {
                                         ? errors.firstName[0]
                                         : "나이를 입력해주세요"
                                 }
-                                label="나"
+                                label="나이"
                                 placeholder={hasFirstName && userData.firstName}
                                 required
                                 type="text"
