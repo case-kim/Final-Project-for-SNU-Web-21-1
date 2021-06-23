@@ -115,7 +115,6 @@ class Questions extends Component {
 
 
     render() {
-        const {user} = this.props
         const currentUser = firebase.auth().currentUser;
         var uid, myName, myLocation, myAge;
         if (currentUser != null) {
