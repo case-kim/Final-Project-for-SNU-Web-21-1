@@ -78,7 +78,7 @@ const Matching = ({type}) => {
     } 
 
     return <Grid container direction="column" justify="center" alignItems="center" id="matching">
-        {partners.map(partner => <PartnerCard {...partner} />)}
+        {partners.map((partner, index) => <PartnerCard key={index} {...partner} />)}
     </Grid>
 }
 
