@@ -77,7 +77,7 @@ const Matching = ({type}) => {
         return <h1>맞는 상대가 없습니다.</h1>
     } 
 
-    return <Grid container direction="column" justify="center" alignItems="center" id="matching">
+    return <Grid container justify="center" alignItems="center" id="matching">
         {partners.map((partner, index) => <PartnerCard key={index} {...partner} />)}
     </Grid>
 }
