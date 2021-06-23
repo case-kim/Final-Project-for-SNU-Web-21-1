@@ -35,7 +35,7 @@ const PartnerCard = ({user, uid, username, type, title}) => {
             <CardContent>
                 <Grid container className="card-body" spacing={3}>
                     <Grid item xs={12} className="card-header">
-                        <b>이름: {username}</b>
+                        <b>{title}</b>
                         <b>타입: {type}</b>
                     </Grid>
                     <Grid item xs={6} id={uid} >
@@ -43,7 +43,7 @@ const PartnerCard = ({user, uid, username, type, title}) => {
                     </Grid>
 
                     <Grid item xs={6}>
-                        <h2>{title}</h2>
+                        <h2>{username}</h2>
                         <ul>
                             <li>어쩌구</li>
                             <li>어쩌구</li>
