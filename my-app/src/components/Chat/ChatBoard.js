@@ -6,6 +6,7 @@ import ChatList from "./ChatList";
 import { firestore } from '../../firebase';
 import Loader from "../Loader";
 import firebase from 'firebase/app';
+import './style.css';
 
 const ChatBoard = () => {
 
@@ -64,16 +65,10 @@ const ChatBoard = () => {
 
 
     if (isLoading) return <Loader message="채팅 목록을 로드하는 중입니다.."/>
-    return <Grid container>
-
-    <Grid item xs={4} className="center">
+    return <div id="container">
         <ChatList userId={user.uid} setCurrentCounterId={setCurrentCounterId} chatList={chatList} />
-    </Grid>
-
-    <Grid item xs={8} className="center">
         <Chat counterId={currentCounterId} />
-    </Grid>
-</Grid>
+</div>
 }
 
 export default ChatBoard;

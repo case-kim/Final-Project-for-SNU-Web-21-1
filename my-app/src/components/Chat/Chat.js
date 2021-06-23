@@ -92,11 +92,11 @@ const Chat = ({counterId, counterName}) => {
 
     if (!counterId) return <h1>채팅 상대를 선택하세요.</h1>
 
-    return <div id="chat-container">
-        {!isLoading && <div className="header">{loadedCounterName}님과의 채팅</div>}
+    return <main>
+        {!isLoading && <header><h2>{loadedCounterName}님과의 채팅</h2></header>}
         {isLoading ? <Loader message="메시지를 불러오는 중입니다.." /> : <Dialog chatLog={chatLog} counterId={counterId} counterName={loadedCounterName} />}
         {!isLoading && <MessageInput userId={currentUser.uid} sendChat={sendChat} isSending={isSending} />}
-    </div>
+    </main>
 }
 
 export default Chat;
