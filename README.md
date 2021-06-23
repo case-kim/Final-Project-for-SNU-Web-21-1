@@ -36,7 +36,7 @@ url: https://snu-traveler.web.app/
 - images/avatars: user profile 저장
 
 
-### /
+### ./
 - 홈페이지 라우팅
 - 비로그인시 메인 화면 송출.
 - 로그인을 했으나, profile이 완료 안 됐을 시, 프로파일 완료 셋업 버튼이 뜬다
