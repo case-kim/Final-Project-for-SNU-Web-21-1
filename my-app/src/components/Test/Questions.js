@@ -120,16 +120,10 @@ class Questions extends Component {
         var myName;
         if (user != null) {
             uid = user.uid
-            myName = authentication.getFullName({...user})
+            myName = user.username
         }
         console.log(uid);
         console.log(myName);
-        const userDb = firebase.database().ref('accounts/' + uid).set({
-            userID: uid,
-            userName: myName,
-            type: null,
-            mbti: null,
-        })
 
         const questions = [{
             question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',
@@ -234,8 +228,14 @@ class Questions extends Component {
             } else {
                 resultMBTI += 'P'
             }
-            const myDB = firebase.database().ref('accounts/' + uid)
-            const partnerList = firebase.database().ref('partnerList/')
+            const myDB = firebase.database().ref('accounts/' + uid);
+            const partnerList = firebase.database().ref('partnerList/');
+            myDB.set({
+                userID: uid,
+                userName: myName,
+                type: null,
+                mbti: null,
+            })
 
             myDB.update({mbti: resultMBTI})
             const typeA = ['ESFJ', 'ESFP', 'ISFP', 'ISTP'];
