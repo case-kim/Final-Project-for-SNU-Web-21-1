@@ -114,6 +114,15 @@ class HomePage extends Component {
             });
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.props.user !== prevProps.user){
+            this.setState({
+                user: this.props.user,
+                profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80
+            }, this.getTabs());
+        }
+    } 
+
     render() {
         const {tabs, user, profileCompleted} = this.state;
 
