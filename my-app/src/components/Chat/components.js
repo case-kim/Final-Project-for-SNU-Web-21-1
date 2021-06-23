@@ -48,8 +48,7 @@ const Dialog = ({chatLog, counterId, counterName}) => {
                 hideName = (formerOne.from === chat.from) && sentByCounter;
             }
 
-
-            return <>
+            return <div key={index}>
                 {!hideDate &&
                 <div className="date"><h3>-{moment(new Date(chat.createdAt)).format('MMM Do')}-</h3></div>}
 
@@ -66,7 +65,7 @@ const Dialog = ({chatLog, counterId, counterName}) => {
                         {chat.message}
                     </div>
                 </li>
-            </>
+            </div>
         })}
     </ul>
 }

@@ -18,16 +18,21 @@ const Chat = ({counterId, counterName}) => {
     const [listener, setListener] = useState(null);
 
     const figureChatRoom = async () => {
-        const chatRooms = await firestore.collection("chatRooms").get();
-        chatRooms.forEach(chatRoom => {
-            const { participants } = chatRoom.data();
 
-            //이 참여자들이 이미 채팅을 했을 경우
-            if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
-                setChatRoomId(chatRoom.id);
-                return;
-            }
-        });
+        try {
+            const chatRooms = await firestore.collection("chatRooms").get();
+            chatRooms.forEach(chatRoom => {
+                const { participants } = chatRoom.data();
+
+                //이 참여자들이 이미 채팅을 했을 경우
+                if (participants.includes(counterId) && participants.includes(currentUser.uid)) {
+                    setChatRoomId(chatRoom.id);
+                    return;
+                }
+            });   
+        } catch {
+            alert('채팅 기록을 로드하는 데 문제가 발생했습니다. 다시 시도해 주세요.');
+        }
 
         //아니면 chatRoom은 그대로 null
         setLoadingState(false);
@@ -35,8 +40,13 @@ const Chat = ({counterId, counterName}) => {
 
     const figureCounterName = async () => {
         if (counterId && !counterName) {
-            const counter = firestore.collection("users").doc(counterId);
-            setCounterName((await counter.get()).data().username);
+            try {
+                const counter = firestore.collection("users").doc(counterId);
+                setCounterName((await counter.get()).data().username);
+            } catch {
+                alert('상대방 닉네임을 불러오는 데 실패했습니다. 상대방 이름이 \'상대\'로 표시됩니다.');
+                setCounterName('상대');
+            }
         }
     }
 
@@ -58,11 +68,18 @@ const Chat = ({counterId, counterName}) => {
         }
 
         if (!chatRoomId) {
-            const createdChatRoom = await firestore.collection("chatRooms").add(chatRoomData);
-            setChatRoomId(createdChatRoom.id);
+            try {
+                const createdChatRoom = await firestore.collection("chatRooms").add(chatRoomData);
+                setChatRoomId(createdChatRoom.id);
+            } catch {
+                alert('채팅 발송에 실패했습니다. 다시 시도해 주세요!');
+            }
         } else {
-            //update 형식
-            await firestore.collection("chatRooms").doc(chatRoomId).update(chatRoomData);
+            try {
+                await firestore.collection("chatRooms").doc(chatRoomId).update(chatRoomData);
+            } catch(e) {
+                alert('채팅 발송에 실패했습니다. 다시 시도해 주세요!');
+            }
         }
 
         setSendingState(false);

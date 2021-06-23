@@ -118,7 +118,7 @@ class HomePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.user !== prevProps.user){
+        if(this.props.userData !== prevProps.userData){
             this.setState({
                 user: this.props.user,
                 profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80
@@ -144,31 +144,34 @@ class HomePage extends Component {
                     <div> 회원가입 및 로그인 후에 사용해주세요</div>
                 </Box>
             );
-        } else if (!profileCompleted) {
-            return (
-                <Box
-                    style={{transform: "translate(-50%, -50%)"}}
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    textAlign="center">
-                    <div className="homepage-subtitle">당신의 정보를 Setting에서 설정해주세요.<br/>메일을 제외하고 사진과 모든 정보를 채워야 테스트가 가능합니다.</div>
-                    <Button onClick={() => this.setState({settingsOpen: true})}> Setup </Button>
-                    <SettingsDialog dialogProps={{open: settingsOpen, onClose: () => this.setState({settingsOpen: false})}} user={user} userData={this.props.userData} theme={theme} />
-                </Box>
-            )
         } else {
-            return <Box style={{transform: "translate(-50%, -50%)"}} position="absolute" top="50%" left="50%" textAlign="center">
+
+            return <>
+                {!profileCompleted ? 
+                    <Box
+                        style={{transform: "translate(-50%, -50%)"}}
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        textAlign="center">
+                        <div className="homepage-subtitle">당신의 정보를 Setting에서 설정해주세요.<br/>메일을 제외하고 사진과 모든 정보를 채워야 테스트가 가능합니다.</div>
+                        <Button onClick={() => this.setState({settingsOpen: true})}> Setup </Button>
+                    </Box> :
+
+                    <Box style={{transform: "translate(-50%, -50%)"}} position="absolute" top="50%" left="50%" textAlign="center">
                         <div className="homepage-subtitle">당신과 맞는 사람을 찾아보세요.</div>
                         <div className="homepage-title">SNU Flower Matching</div>
                         <ButtonGroup id='buttonGroup' color='primary' aria-label='large outlined primary button group'>
-                            {tabs.map(tab => {
-                                return <Button><Link to={tab.to}>{tab.name}</Link></Button>
+                            {tabs.map((tab,index) => {
+                                return <Button key={index}><Link to={tab.to}>{tab.name}</Link></Button>
                             })}
                         </ButtonGroup>
                     </Box>
-        }
+                    }
 
+                    <SettingsDialog dialogProps={{open: settingsOpen, onClose: () => this.setState({settingsOpen: false})}} user={user} userData={this.props.userData} theme={theme} />
+                </>
+        }
     }
 
 }

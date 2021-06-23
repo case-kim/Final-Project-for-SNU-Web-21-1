@@ -115,15 +115,19 @@ class Questions extends Component {
 
 
     render() {
-        const user = firebase.auth().currentUser;
-        var uid;
-        var myName;
-        if (user != null) {
-            uid = user.uid
-            myName = user.username
+        const currentUser = firebase.auth().currentUser;
+        var uid, myName, myLocation, myAge;
+        if (currentUser != null) {
+            uid = currentUser.uid
+            myName = currentUser.displayName
+            myAge = authentication.getName(currentUser)
+            myLocation = authentication.getFullName(currentUser).replace(authentication.getName(currentUser)+ " ","")
         }
         console.log(uid);
         console.log(myName);
+        console.log(myAge);
+        console.log(myLocation);
+        console.log(authentication.getFullName(currentUser))
 
         const questions = [{
             question: '비행기 옆자리에 마음에 드는 이상형이 있다. 어쩌다 대화를 시작한 나는',
@@ -233,6 +237,8 @@ class Questions extends Component {
             myDB.set({
                 userID: uid,
                 userName: myName,
+                userAge: myAge,
+                userLocation: myLocation,
                 type: null,
                 mbti: null,
             })

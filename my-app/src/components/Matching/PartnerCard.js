@@ -13,21 +13,20 @@ import 'firebase/database';
 
 import Chat from '../Chat/Chat';
 
-const PartnerCard = ({user, uid, username, type, title}) => {
+const PartnerCard = ({uid, username, type, age, location, title}) => {
 
-    const avatarImage = firebase.storage().ref(`images/avatars/${uid}`);
 
+    const [imgSrc, setImgSrc] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(()=>{
-        avatarImage.getDownloadURL().then(function(url) {
-            console.log(url);
-            const partnerImage = document.createElement('img')
-            partnerImage.src = url;
-            partnerImage.width = 200;
-            partnerImage.height = 200;
-            document.getElementById(uid).appendChild(partnerImage);
-        })
+        const avatarImage = firebase.storage().ref(`images/avatars/${uid}`);
+        avatarImage.getDownloadURL()
+        .then(res => {
+            setImgSrc(res);
+        }).catch(e => {
+            setImgSrc('https://i.stack.imgur.com/34AD2.jpg');
+        });
     },[])
     
     return <div className="card-container">
@@ -38,16 +37,14 @@ const PartnerCard = ({user, uid, username, type, title}) => {
                         <b>{title}</b>
                         <b>타입: {type}</b>
                     </Grid>
-                    <Grid item xs={6} id={uid} >
-
+                    <Grid item xs={6}>
+                        <img src={imgSrc} style={{width: '200px', height: '200px'}} />
                     </Grid>
-
                     <Grid item xs={6}>
                         <h2>{username}</h2>
                         <ul>
-                            <li>어쩌구</li>
-                            <li>어쩌구</li>
-                            <li>어쩌구</li>
+                            <li>나이: {age}</li>
+                            <li>사는 곳: {location}</li>
                         </ul>
                         <Button onClick={() => setModalOpen(true)} variant="outlined" color="primary">Start Chat</Button>
                     </Grid>
