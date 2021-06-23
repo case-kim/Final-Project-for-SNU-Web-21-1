@@ -9,8 +9,11 @@
 자신과 가장 잘 맞는 사람을 찾아서 서로 대화할 수 있게하기 위해 만들었습니다.
 
 url: https://snu-traveler.web.app/
+ -------
+
 
 ## 기능명세
+ -------
 
 ### 개요
 회원가입 및 로그인 / 구글 & 깃헙계정으로 진행가능. 회원가입 및 로그인 에러시 에러 메시지 뜸
@@ -21,7 +24,9 @@ url: https://snu-traveler.web.app/
 로그인을 했고, 테스트를 했으면, 결과창, 매칭창, 채팅창을 보여준다
 내부 라우팅은 /, /test, /result, /matching, /chatting 으로 구성 (React-Router-Dom 사용)
 
+
 ### Firebase DB
+ -------
 각자 개발이 달라서 firebase와 firestore를 혼용함.
 #### Realtime DB
 - accounts: 유저 개인 정보 저장
@@ -35,7 +40,9 @@ url: https://snu-traveler.web.app/
 - imagesOfFlowers: 각 유형에 맞는 꽃 이미지 저장
 - images/avatars: user profile 저장
 
+
 ### Router 설명
+ -------
 
 #### ./
 - 홈페이지 라우팅
