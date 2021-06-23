@@ -281,6 +281,8 @@ class App extends Component {
             <>
               <Router
                 user={user}
+                userData={userData}
+                onSettingsClick={() => this.openDialog("settingsDialog")}
                 roles={roles}
                 bar={
                   <Bar

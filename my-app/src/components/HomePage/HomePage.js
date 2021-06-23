@@ -19,13 +19,16 @@ import 'firebase/database';
 import 'firebase/functions';
 import './style-hompage.css';
 
+import { theme } from './constants';
+
 
 class HomePage extends Component {
 
     state = {
         user: this.props.user,
         tabs: [],
-        profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80
+        profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80,
+        settingsOpen: false
     }
 
     componentDidMount() {
@@ -119,12 +122,14 @@ class HomePage extends Component {
             this.setState({
                 user: this.props.user,
                 profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80
-            }, this.getTabs());
+            }, () => {
+                this.getTabs();
+            });
         }
     } 
 
     render() {
-        const {tabs, user, profileCompleted} = this.state;
+        const {tabs, user, profileCompleted, settingsOpen} = this.state;
 
         if (!user) {
             return (
@@ -148,7 +153,8 @@ class HomePage extends Component {
                     left="50%"
                     textAlign="center">
                     <div className="homepage-subtitle">당신의 정보를 Setting에서 설정해주세요.<br/>메일을 제외하고 사진과 모든 정보를 채워야 테스트가 가능합니다.</div>
-                    <Button onClick={() => SettingsDialog}> Setup </Button>
+                    <Button onClick={() => this.setState({settingsOpen: true})}> Setup </Button>
+                    <SettingsDialog dialogProps={{open: settingsOpen, onClose: () => this.setState({settingsOpen: false})}} user={user} userData={this.props.userData} theme={theme} />
                 </Box>
             )
         } else {
