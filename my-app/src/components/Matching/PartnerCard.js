@@ -13,41 +13,51 @@ import 'firebase/database';
 
 import Chat from '../Chat/Chat';
 
-const PartnerCard = ({user, uid, username, type, title}) => {
+const PartnerCard = ({user, uid, username, type, age, location, title}) => {
 
     const avatarImage = firebase.storage().ref(`images/avatars/${uid}`);
 
     const [modalOpen, setModalOpen] = useState(false);
 
-    useEffect(()=>{
+    if (!document.getElementById(uid)){
         avatarImage.getDownloadURL().then(function(url) {
             console.log(url);
             const partnerImage = document.createElement('img')
+            partnerImage.id = uid;
             partnerImage.src = url;
             partnerImage.width = 200;
             partnerImage.height = 200;
-            document.getElementById(uid).appendChild(partnerImage);
+            document.getElementById(username).appendChild(partnerImage);
         })
-    },[])
+    }
+
+
+    // useEffect(()=>{
+    //     avatarImage.getDownloadURL().then(function(url) {
+    //         console.log(url);
+    //         const partnerImage = document.createElement('img')
+    //         partnerImage.src = url;
+    //         partnerImage.id = uid;
+    //         partnerImage.width = 200;
+    //         partnerImage.height = 200;
+    //         document.getElementById(username).appendChild(partnerImage);
+    //     })
+    // },[])
     
     return <div className="card-container">
         <Card className="card" variant="outlined" onClick={() => setModalOpen(true)}>
             <CardContent>
                 <Grid container className="card-body" spacing={3}>
                     <Grid item xs={12} className="card-header">
-                        <b>{title}</b>
+                        <b>이름: {username}</b>
                         <b>타입: {type}</b>
                     </Grid>
-                    <Grid item xs={6} id={uid} >
-
-                    </Grid>
-
+                    <Grid item xs={6} id={username} ></Grid>
                     <Grid item xs={6}>
                         <h2>{username}</h2>
                         <ul>
-                            <li>어쩌구</li>
-                            <li>어쩌구</li>
-                            <li>어쩌구</li>
+                            <li>나이: {age}</li>
+                            <li>사는 곳: {location}</li>
                         </ul>
                         <Button onClick={() => setModalOpen(true)} variant="outlined" color="primary">Start Chat</Button>
                     </Grid>

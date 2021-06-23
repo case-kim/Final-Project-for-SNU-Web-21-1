@@ -20,7 +20,6 @@ const Matching = ({type}) => {
     var myName;
     if (user != null) {
         uid = user.uid
-        myName = authentication.getFullName({...user})
     }
     const myDB = firebase.database().ref(`accounts/${uid}/`)
 
@@ -30,30 +29,36 @@ const Matching = ({type}) => {
 
     useEffect(() => {
         // 타입 맞는 상대 불러오기: API. type 프로퍼티 활용
-        myDB.child('userName').on('value',function(name){
-            myName = name.val()
-        })
         myDB.child('type').on('value', function(snapshot){
             myType = snapshot.val();
             const myPartnerList = firebase.database().ref(`partnerList/${myType}/`)
             myPartnerList.on('value', function(partner){
                 const uidOfPartner = Object.keys(partner.val());
+                console.log(uidOfPartner);
                 const res = [];
                 uidOfPartner.map((oneUid) => {
                     if (oneUid !== user.uid){
-
-                        firebase.database().ref(`accounts/${oneUid}/mbti`).on('value', function(mbti) {
+                        const oneDB = firebase.database().ref(`accounts/${oneUid}`)
+                        oneDB.child('mbti').on('value', function(mbti) {
                             const mbtiOfPartner = mbti.val();
                             firebase.database().ref(`testResult/${mbtiOfPartner}/title`).on('value', function(title){
                                 const titleOfMbti = title.val();
-                                firebase.database().ref(`accounts/${oneUid}/userName`).on('value', function(name){
-                                    const userRes = {'user': user, 'uid': oneUid, 'username': name.val(), 'type':myType, 'title': titleOfMbti}
-                                    res.push(userRes);
+                                oneDB.child('userName').on('value', function(name){
+                                    myName = name.val()
+                                    oneDB.child('userAge').on('value', function(age){
+                                        const myAge = age.val()
+                                        oneDB.child('userLocation').on('value', function(location){
+                                            const myLocation = location.val()
+                                            const userRes = {'user': user, 'uid': oneUid, 'username': name.val(), 'type':myType,
+                                                'age':myAge, 'location':myLocation, 'title': titleOfMbti}
+                                            res.push(userRes);
+                                            if(res.length === uidOfPartner.length-1) {
+                                                setPartners([...res]);
+                                                setLoadingState(false);
+                                            }
+                                        })
+                                    })
 
-                                    if(res.length === uidOfPartner.length-1) {
-                                        setPartners([...res]);
-                                        setLoadingState(false);
-                                    }
                                 });
 
                             })
