@@ -118,7 +118,7 @@ class HomePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.user !== prevProps.user){
+        if(this.props.userData !== prevProps.userData){
             this.setState({
                 user: this.props.user,
                 profileCompleted: authentication.getProfileCompletion({...this.props.user}) >= 80
