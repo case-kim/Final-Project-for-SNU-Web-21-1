@@ -115,11 +115,12 @@ class Questions extends Component {
 
 
     render() {
+        const {user} = this.props
         const currentUser = firebase.auth().currentUser;
         var uid, myName, myLocation, myAge;
         if (currentUser != null) {
             uid = currentUser.uid
-            myName = currentUser.displayName
+            myName = currentUser.username
             myAge = authentication.getName(currentUser)
             myLocation = authentication.getFullName(currentUser).replace(authentication.getName(currentUser)+ " ","")
         }
